@@ -5,6 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -20,6 +22,7 @@ public class HelloApplication extends Application {
     int w = 900;
     @Override
     public void start(Stage stage)  {
+
         Pane root = new Pane(); // aasva
         Canvas canvas = new Canvas(w, h);
         root.getChildren().add(canvas);
@@ -28,6 +31,13 @@ public class HelloApplication extends Application {
 
         context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
         context.fillRect(0, 0, w, h);
+
+
+        Gontrand gontrandAccueil = new Gontrand();
+
+       context.drawImage(gontrandAccueil, 450 - (gontrandAccueil.getFitWidth()/2), 260 - (gontrandAccueil.getFitHeight()/2));
+
+
 
 
 
