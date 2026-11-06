@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 public class Gontrand extends ObjetDuJeu {
 
     private Image image;
-    private ImageView imgView;
 
     public Gontrand(Point2D position, Point2D velocite, Point2D acceleration, Point2D taille) {
         this.position = position;
@@ -17,16 +16,11 @@ public class Gontrand extends ObjetDuJeu {
         this.acceleration = acceleration;
         this.taille = taille;
         this.image = new Image("gontrand.png");
-        this.imgView = new ImageView(image);
-        imgView.setFitHeight(taille.getY());
-        imgView.setFitWidth(taille.getX());
-        imgView.setPreserveRatio(true);
     }
 
     @Override
     public void update(double deltaTemps) {
         updatePhysique(deltaTemps);
-
 
     }
 
@@ -42,10 +36,6 @@ public class Gontrand extends ObjetDuJeu {
 
     public Image getImage() {
         return image;
-    }
-
-    public ImageView getImgView() {
-        return imgView;
     }
 
 }
