@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     int w = 520;
     @Override
     public void start(Stage stage)  {
-        Pane root = new Pane(); //
+        Pane root = new Pane(); // aasva
         Canvas canvas = new Canvas(w, h);
         root.getChildren().add(canvas);
 
