@@ -18,6 +18,9 @@ public class Gontrand extends ObjetDuJeu {
         this.taille = taille;
         this.image = new Image("gontrand.png");
         this.imgView = new ImageView(image);
+        imgView.setFitHeight(taille.getY());
+        imgView.setFitWidth(taille.getX());
+        imgView.setPreserveRatio(true);
     }
 
     @Override
@@ -44,6 +47,7 @@ public class Gontrand extends ObjetDuJeu {
     public ImageView getImgView() {
         return imgView;
     }
+
 }
    /* public void update(double deltaTemps) {
 
