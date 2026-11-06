@@ -16,8 +16,8 @@ public class HelloApplication extends Application {
 
     Random random = new Random();
 
-    int h = 900;
-    int w = 520;
+    int h = 520;
+    int w = 900;
     @Override
     public void start(Stage stage)  {
         Pane root = new Pane(); // aasva
