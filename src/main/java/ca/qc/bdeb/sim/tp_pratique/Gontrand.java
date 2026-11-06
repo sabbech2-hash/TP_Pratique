@@ -24,11 +24,14 @@ public class Gontrand extends ObjetDuJeu {
     public void update(double deltaTemps) {
         updatePhysique(deltaTemps);
 
-        private void updatePhysique(double deltaTemps) {
-            velocite = velocite.add(acceleration.multiply(deltaTemps));
-            position = position.add(velocite.multiply(deltaTemps));
-        }
+
     }
+
+    protected void updatePhysique(double deltaTemps) {
+        velocite = velocite.add(acceleration.multiply(deltaTemps));
+        position = position.add(velocite.multiply(deltaTemps));
+    }
+
     @Override
     public void draw(GraphicsContext contexte, Camera camera) {
 
