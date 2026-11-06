@@ -6,7 +6,7 @@ public class ObjetDuJeu {
 
     protected Point2D position;
     protected Point2D velocite;
-    protected Point2D taille;
+    protected Point2D taille = new Point2D(0,0);
 
 
 
