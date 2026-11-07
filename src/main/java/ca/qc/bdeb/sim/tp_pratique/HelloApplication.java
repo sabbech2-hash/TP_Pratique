@@ -10,10 +10,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -62,9 +64,62 @@ public class HelloApplication extends Application {
 
     private Scene sceneInfo () {
 
-        // On codera ca une autre fois
+        Pane root = new Pane();
+
+        Scene scene = new Scene(root, w, h);
+
+        Canvas canvas = new Canvas(w, h);   // reste a voir si peut creer un pour tout
+
+        root.getChildren().add(canvas);
+
+        GraphicsContext context = canvas.getGraphicsContext2D();
+
+        context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+        context.fillRect(0, 0, w, h);
+
+        context.setFill(Color.BLACK);
+        context.setFont(Font.font("Purisa", 50));
+        context.fillText("Gontrand le Flétan", w/2 - 200 , 50);  // faudrait trouver facon de mieux centrer en X
+
+        Random random = new Random();
+        Image [] imagesPoissons = {
+
+                new Image("poisson1.png"),
+                new Image("poisson2.png"),
+                new Image("poisson3.png"),
+                new Image("poisson4.png"),
+                new Image("poisson5.png"),
+
+        };
+
+        context.drawImage(imagesPoissons[random.nextInt(imagesPoissons.length)], w/2 - 70 , 100);  // meme chose pour position en X
+
+        context.setFont(Font.font("Arial", 25));
+        context.fillText("Par", w/2 - 150, 300);
+        context.setFont(Font.font("Verdana", 30));
+        context.fillText("Thomas Benoit",  w/2 - 100 , 300);
+        context.setFont(Font.font("Arial", 25));
+        context.fillText("et",w/2 - 140, 360 );
+        context.setFont(Font.font("Verdana", 30));
+        context.fillText("Bechara Saba", w/2 - 100, 360);
+
+        var btnRetour = new Button("Retour");
+        root.getChildren().add(btnRetour);   // meme chose, le bouton est en (0,0), j arrive pas a deplacer
+
+        scene.setOnKeyPressed(e -> {
+            if  (e.getCode() == KeyCode.ESCAPE) {
+                stage.setScene(sceneAccueil());
+            }
+        });
 
 
+
+
+
+
+
+
+        return scene;
     }
 
     int h = 520;
