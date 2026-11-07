@@ -45,13 +45,24 @@ public class HelloApplication extends Application {
         optionsAccueil.setSpacing(10);
 
         var btnJouer = new Button("Jouer!");
+
         var btnInfo = new Button("Infos");
+        btnInfo.setOnAction(e -> {
+            stage.setScene(sceneInfo());
+        });
 
         optionsAccueil.getChildren().addAll(btnJouer, btnInfo);
 
         root.getChildren().addAll(canvas, optionsAccueil);
 
         return scene;
+
+
+    }
+
+    private Scene sceneInfo () {
+
+        // On codera ca une autre fois
 
 
     }
