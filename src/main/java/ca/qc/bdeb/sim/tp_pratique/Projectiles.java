@@ -5,7 +5,9 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class Projectiles extends ObjetDuJeu{
     @Override
-    public void draw(GraphicsContext contexte, Camera camera) {
+    public void draw(GraphicsContext context) {
 
     }
+
+
 }

@@ -1,5 +1,6 @@
 package ca.qc.bdeb.sim.tp_pratique;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
@@ -27,6 +28,7 @@ public class HelloApplication extends Application {
     Random random = new Random();
 
 
+
     private Scene sceneAccueil() {
 
         var root = new StackPane();
@@ -47,6 +49,9 @@ public class HelloApplication extends Application {
         optionsAccueil.setSpacing(10);
 
         var btnJouer = new Button("Jouer!");
+        btnJouer.setOnMouseClicked(e -> {
+            stage.setScene(sceneJeu());
+        });
 
         var btnInfo = new Button("Infos");
         btnInfo.setOnAction(e -> {
@@ -56,6 +61,7 @@ public class HelloApplication extends Application {
         optionsAccueil.getChildren().addAll(btnJouer, btnInfo);
 
         root.getChildren().addAll(canvas, optionsAccueil);
+
 
         return scene;
 
@@ -122,8 +128,53 @@ public class HelloApplication extends Application {
         return scene;
     }
 
+    private Scene sceneJeu() {
+
+        Partie premiere = new Partie();
+
+        Pane root = new Pane();
+        Canvas canvas = new Canvas(w, h);
+
+        Scene  scene = new Scene(root, w, h);
+
+        GraphicsContext context = canvas.getGraphicsContext2D();
+
+        root.getChildren().add(canvas);
+
+        context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+        context.fillRect(0, 0, w, h);
+
+        AnimationTimer timer = new AnimationTimer() {
+            private long dernierTemps = System.nanoTime();
+            @Override
+            public void handle(long temps) {
+                double deltaTemps = (temps - dernierTemps)  * 1e-9;
+
+                premiere.draw(context);
+
+
+
+
+
+
+                dernierTemps = temps;
+            }
+        };
+        timer.start();
+
+
+
+
+
+
+
+
+        return scene;
+    }
+
     int h = 520;
     int w = 900;
+
     @Override
     public void start(Stage primaryStage)  {
 

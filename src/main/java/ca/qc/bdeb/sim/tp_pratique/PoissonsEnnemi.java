@@ -27,7 +27,7 @@ public class PoissonsEnnemi extends ObjetDuJeu {
 
 
     @Override
-    public void draw(GraphicsContext context, Camera camera) {
+    public void draw(GraphicsContext context) {
 
         context.drawImage(image, 0, 0);
 

@@ -11,12 +11,25 @@ public abstract class ObjetDuJeu {
     protected Point2D taille;
 
     public void update(double deltaTemps) {
+
+        updatePhysique(deltaTemps);   // va faire le update dependamment de l'objet
+
     }
 
     protected void updatePhysique (double deltaTemps) {
+
+        velocite = velocite.add(acceleration.multiply(deltaTemps));
+        position = position.add(velocite.multiply(deltaTemps));       // un update qui s'applique a tous (lois physiques)
+
     }
 
-    public abstract void draw(GraphicsContext contexte, Camera camera);
+    public abstract void draw(GraphicsContext context);
+
+
+
+
+
+
 
     public double getHaut() {
         return 0.0;

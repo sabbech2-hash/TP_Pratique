@@ -4,7 +4,6 @@ import javafx.geometry.Point2D;
 import javafx.scene.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class Gontrand extends ObjetDuJeu {
 
@@ -29,8 +28,19 @@ public class Gontrand extends ObjetDuJeu {
         position = position.add(velocite.multiply(deltaTemps));
     }
 
+
     @Override
-    public void draw(GraphicsContext contexte, Camera camera) {
+    public void draw(GraphicsContext context) {
+
+        context.drawImage(
+                image,
+                position.getX(),
+                position.getY(),
+                taille.getX(),
+                taille.getY()
+        );
+
+
 
     }
 
@@ -39,6 +49,18 @@ public class Gontrand extends ObjetDuJeu {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
    /* public void update(double deltaTemps) {
 
 
