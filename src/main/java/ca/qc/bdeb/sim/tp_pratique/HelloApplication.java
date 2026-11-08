@@ -16,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -42,13 +43,26 @@ public class HelloApplication extends Application {
 
        GraphicsContext context = canvas.getGraphicsContext2D();
 
-        context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+       // context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+        context.setFill(Color.web("#2A7FFF"));
         context.fillRect(0, 0, w, h);
 
-        context.drawImage(new Image("logo.png"), 275,35, 330, 350);
+        //context.drawImage(new Image("logo.png"), 275,35, 330, 350);
+
+        VBox nodesAccueil = new VBox();
+        nodesAccueil.setSpacing(10);
+        nodesAccueil.setAlignment(Pos.TOP_CENTER);
+
+        Image imgLogo = new Image("logo.png");
+
+        ImageView imgViewLogo = new ImageView(imgLogo);
+        imgViewLogo.setFitWidth(470);
+        imgViewLogo.setFitHeight(550);
+        imgViewLogo.setPreserveRatio(true);
 
         HBox optionsAccueil = new HBox();
         optionsAccueil.setSpacing(10);
+        optionsAccueil.setAlignment(Pos.CENTER);
 
         var btnJouer = new Button("Jouer!");
         btnJouer.setOnMouseClicked(e -> {
@@ -62,7 +76,11 @@ public class HelloApplication extends Application {
 
         optionsAccueil.getChildren().addAll(btnJouer, btnInfo);
 
-        root.getChildren().addAll(canvas, optionsAccueil);
+        nodesAccueil.getChildren().addAll(imgViewLogo, optionsAccueil);
+
+        root.getChildren().addAll(canvas, nodesAccueil);
+
+        //root.getChildren().addAll(canvas, optionsAccueil);
 
 
         return scene;
@@ -72,13 +90,13 @@ public class HelloApplication extends Application {
 
     private Scene sceneInfo () {
 
-        Pane root = new Pane();
+        StackPane root = new StackPane();
 
         Scene scene = new Scene(root, w, h);
 
         Canvas canvas = new Canvas(w, h);   // reste a voir si peut creer un pour tout
 
-        root.getChildren().add(canvas);
+        //root.getChildren().add(canvas);
 
         GraphicsContext context = canvas.getGraphicsContext2D();
 
@@ -89,6 +107,7 @@ public class HelloApplication extends Application {
         context.setFont(Font.font("Purisa", 50));
         context.fillText("Gontrand le Flétan", w/2 - 200 , 50);  // faudrait trouver facon de mieux centrer en X
 
+        Image fond = new Image("");
         Random random = new Random();
         Image [] imagesPoissons = {
 
@@ -99,7 +118,7 @@ public class HelloApplication extends Application {
                 new Image("poisson5.png"),
 
         };
-
+/*
         context.drawImage(imagesPoissons[random.nextInt(imagesPoissons.length)], w/2 - 70 , 100);  // meme chose pour position en X
 
         context.setFont(Font.font("Arial", 25));
@@ -110,7 +129,7 @@ public class HelloApplication extends Application {
         context.fillText("et",w/2 - 140, 360 );
         context.setFont(Font.font("Verdana", 30));
         context.fillText("Bechara Saba", w/2 - 100, 360);
-
+*/
         var btnRetour = new Button("Retour");
         root.getChildren().add(btnRetour);   // meme chose, le bouton est en (0,0), j arrive pas a deplacer
 
