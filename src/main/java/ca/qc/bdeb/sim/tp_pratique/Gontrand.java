@@ -5,8 +5,11 @@ import javafx.scene.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
+import javafx.scene.paint.Color;
 
 public class Gontrand extends ObjetDuJeu {
+
+    private static int vie = 4;   // nombre de vie de Gontrand n'est pas attribut de classe
 
     private Image image;
 
@@ -70,6 +73,7 @@ public class Gontrand extends ObjetDuJeu {
     @Override
     public void draw(GraphicsContext context) {
 
+        // image de Gontrand
         context.drawImage(
                 image,
                 position.getX(),
@@ -78,9 +82,22 @@ public class Gontrand extends ObjetDuJeu {
                 taille.getY()
         );
 
+        // barre de vie de Gontrand
+        context.setStroke(Color.WHITE);
+        context.strokeRect(10,10,150,35);
 
+        // methode pour verifier si Gontrand perdu des vies
+
+        context.setFill(Color.WHITE);
+        context.fillRect(10, 10, 150, 35);
+        context.drawImage(new Image("etoile.png"),  170, 12);
 
     }
+
+    public void perduVie() {
+        // doit voir si Gontrand est rentrer en collision
+    }
+    public void perduDroite() {}
 
     public Image getImage() {
         return image;

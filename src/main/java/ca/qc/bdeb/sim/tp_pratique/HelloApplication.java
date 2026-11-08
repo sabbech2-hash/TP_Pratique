@@ -27,6 +27,7 @@ public class HelloApplication extends Application {
 
     private Stage stage;
     Random random = new Random();
+    private Color couleurFond;
 
 
 
@@ -142,7 +143,8 @@ public class HelloApplication extends Application {
 
         root.getChildren().add(canvas);
 
-        context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+        couleurFond = Color.hsb(random.nextInt(190, 270) ,0.84, 1.00);
+        context.setFill(couleurFond);
         context.fillRect(0, 0, w, h);
 
         scene.setOnKeyPressed((e)-> {
@@ -157,16 +159,18 @@ public class HelloApplication extends Application {
             Input.setKeyPressed(e.getCode(),false);
         });
 
+
         AnimationTimer timer = new AnimationTimer() {
             private long dernierTemps = System.nanoTime();
             @Override
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps)  * 1e-9;
 
+                context.setFill(couleurFond);  // permet de garder la couleur de fond, même si on change couleur context pour x raison
                 context.fillRect(0, 0, w, h);
 
-                premiere.draw(context);
                 premiere.update(deltaTemps);
+                premiere.draw(context);
 
 
 

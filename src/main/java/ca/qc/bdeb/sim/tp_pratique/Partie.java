@@ -14,6 +14,10 @@ import javafx.scene.canvas.GraphicsContext;
             this.gontrand = new Gontrand(new Point2D(0,200), new Point2D(0,0), new Point2D(0,0),  new Point2D(102,90));
         }
 
+    public void verifierCollision () {
+
+    }
+
     public void draw(GraphicsContext context){
 
         gontrand.draw(context);
@@ -23,6 +27,8 @@ import javafx.scene.canvas.GraphicsContext;
             gontrand.update(deltaTemps);
 
     }
+
+
 
 
 }
