@@ -30,35 +30,55 @@ public class Gontrand extends ObjetDuJeu {
 
         if (gauche) {
             acceleration = new Point2D(-1000, acceleration.getY());
-            if (velocite.getX() <= -300) {
-                velocite = new Point2D(-300, velocite.getY());
-            }
-        } else if (droite) {
-            acceleration = new Point2D(1000, acceleration.getY());
-            if (velocite.getX() >= 300) {
-                velocite = new Point2D(300, velocite.getY());
-            }
-        } else if (bas) {
-            acceleration = new Point2D(acceleration.getX(), 1000);
-            if (velocite.getY() >= 300) {
-                velocite = new Point2D(velocite.getX(), 300);
-            }
-        } else if (haut) {
-            acceleration = new Point2D(acceleration.getX(), -1000);
-            if (velocite.getY() <= -300) {
-                velocite = new Point2D(velocite.getX(), -300);
-            }
-        } else {
-            if (velocite.getX() > 0) {
-                acceleration = new Point2D(-100, acceleration.getY());
-            } else if  (velocite.getX() < 0) {
-                acceleration = new Point2D(100, acceleration.getY());
-            } else if (velocite.getY() > 0) {
-                acceleration = new Point2D(acceleration.getX(), -100);
-            } else {
-                acceleration = new Point2D(acceleration.getX(), 100);
-            }
         }
+        if (velocite.getX() < -300) {
+            velocite = new Point2D(-300, velocite.getY());
+        }
+
+
+        if (droite) {
+            acceleration = new Point2D(1000, acceleration.getY());
+        }
+        if (velocite.getX() > 300) {
+            velocite = new Point2D(300, velocite.getY());
+        }
+
+
+        if (bas) {
+            acceleration = new Point2D(acceleration.getX(), 1000);
+        }
+        if (velocite.getY() > 300) {
+            velocite = new Point2D(velocite.getX(), 300);
+        }
+
+
+        if (haut) {
+            acceleration = new Point2D(acceleration.getX(), -1000);
+        }
+        if (velocite.getY() < -300) {
+            velocite = new Point2D(velocite.getX(), -300);
+        }
+
+
+        if (!(droite || gauche) && velocite.getX() > 0) {
+            acceleration = new Point2D(-100, acceleration.getY());
+        }
+
+
+        if  (!(gauche || droite) && velocite.getX() < 0) {
+            acceleration = new Point2D(100, acceleration.getY());
+        }
+
+
+        if (!(bas || haut) && velocite.getY() > 0) {
+            acceleration = new Point2D(acceleration.getX(), -100);
+        }
+
+
+        if (!(haut || bas) && velocite.getY() < 0) {
+            acceleration = new Point2D(acceleration.getX(), 100);
+        }
+
 
         updatePhysique(deltaTemps);  //
 
