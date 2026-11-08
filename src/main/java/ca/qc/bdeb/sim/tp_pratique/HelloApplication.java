@@ -2,6 +2,7 @@ package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
@@ -144,14 +145,28 @@ public class HelloApplication extends Application {
         context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
         context.fillRect(0, 0, w, h);
 
+        scene.setOnKeyPressed((e)-> {
+            if (e.getCode() == KeyCode.ESCAPE) {
+
+                Platform.exit();
+            } else {
+                Input.setKeyPressed(e.getCode(), true);
+            }
+        });
+        scene.setOnKeyReleased((e)-> {
+            Input.setKeyPressed(e.getCode(),false);
+        });
+
         AnimationTimer timer = new AnimationTimer() {
             private long dernierTemps = System.nanoTime();
             @Override
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps)  * 1e-9;
 
-                premiere.draw(context);
+                context.fillRect(0, 0, w, h);
 
+                premiere.draw(context);
+                premiere.update(deltaTemps);
 
 
 
@@ -183,24 +198,6 @@ public class HelloApplication extends Application {
         stage.setResizable(false);
 
         stage.setScene(sceneAccueil());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         stage.show();
     }

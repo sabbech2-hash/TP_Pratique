@@ -20,6 +20,7 @@ import javafx.scene.canvas.GraphicsContext;
     }
 
     public void update(double deltaTemps) {
+            gontrand.update(deltaTemps);
 
     }
 

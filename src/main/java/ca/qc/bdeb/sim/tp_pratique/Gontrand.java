@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 
 public class Gontrand extends ObjetDuJeu {
 
@@ -19,6 +20,43 @@ public class Gontrand extends ObjetDuJeu {
 
     @Override
     public void update(double deltaTemps) {
+        boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
+        boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
+        boolean haut = Input.isKeyPressed(KeyCode.UP);
+        boolean bas = Input.isKeyPressed(KeyCode.DOWN);
+
+        if (gauche) {
+            acceleration = new Point2D(-1000, acceleration.getY());
+            if (velocite.getX() <= -300) {
+                velocite = new Point2D(-300, velocite.getY());
+            }
+        } else if (droite) {
+            acceleration = new Point2D(1000, acceleration.getY());
+            if (velocite.getX() >= 300) {
+                velocite = new Point2D(300, velocite.getY());
+            }
+        } else if (bas) {
+            acceleration = new Point2D(acceleration.getX(), 1000);
+            if (velocite.getY() >= 300) {
+                velocite = new Point2D(velocite.getX(), 300);
+            }
+        } else if (haut) {
+            acceleration = new Point2D(acceleration.getX(), -1000);
+            if (velocite.getY() <= -300) {
+                velocite = new Point2D(velocite.getX(), -300);
+            }
+        } else {
+            if (velocite.getX() > 0) {
+                acceleration = new Point2D(-100, acceleration.getY());
+            } else if  (velocite.getX() < 0) {
+                acceleration = new Point2D(100, acceleration.getY());
+            } else if (velocite.getY() > 0) {
+                acceleration = new Point2D(acceleration.getX(), -100);
+            } else {
+                acceleration = new Point2D(acceleration.getX(), 100);
+            }
+        }
+
         updatePhysique(deltaTemps);
 
     }
