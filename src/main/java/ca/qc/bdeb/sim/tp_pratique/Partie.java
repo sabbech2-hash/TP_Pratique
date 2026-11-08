@@ -15,7 +15,7 @@ import javafx.scene.canvas.GraphicsContext;
         }
 
     public void verifierCollision () {
-
+//
     }
 
     public void draw(GraphicsContext context){
