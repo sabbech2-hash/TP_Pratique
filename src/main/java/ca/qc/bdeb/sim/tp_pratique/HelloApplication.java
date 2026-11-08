@@ -4,6 +4,7 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -96,18 +98,14 @@ public class HelloApplication extends Application {
 
         Canvas canvas = new Canvas(w, h);   // reste a voir si peut creer un pour tout
 
-        //root.getChildren().add(canvas);
-
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
         context.fillRect(0, 0, w, h);
 
-        context.setFill(Color.BLACK);
-        context.setFont(Font.font("Purisa", 50));
-        context.fillText("Gontrand le Flétan", w/2 - 200 , 50);  // faudrait trouver facon de mieux centrer en X
+        Text titre = new Text("Gontrand le Flétand");
+        titre.setFont(Font.font("Purisa", 50));
 
-        Image fond = new Image("");
         Random random = new Random();
         Image [] imagesPoissons = {
 
@@ -118,20 +116,57 @@ public class HelloApplication extends Application {
                 new Image("poisson5.png"),
 
         };
-/*
-        context.drawImage(imagesPoissons[random.nextInt(imagesPoissons.length)], w/2 - 70 , 100);  // meme chose pour position en X
 
-        context.setFont(Font.font("Arial", 25));
-        context.fillText("Par", w/2 - 150, 300);
-        context.setFont(Font.font("Verdana", 30));
-        context.fillText("Thomas Benoit",  w/2 - 100 , 300);
-        context.setFont(Font.font("Arial", 25));
-        context.fillText("et",w/2 - 140, 360 );
-        context.setFont(Font.font("Verdana", 30));
-        context.fillText("Bechara Saba", w/2 - 100, 360);
-*/
+        ImageView imgViewPoissonAleatoire = new ImageView(imagesPoissons[random.nextInt(imagesPoissons.length)]);
+        imgViewPoissonAleatoire.setFitWidth(150);
+        imgViewPoissonAleatoire.setFitHeight(300);
+        imgViewPoissonAleatoire.setPreserveRatio(true);
+        Text[] textesNom = {
+                new Text("Thomas Benoit"),
+                new Text("Bechara Saba")
+        };
+
+        for (Text text : textesNom) {
+            text.setFont(Font.font("Verdana", 30));
+        }
+
+        Text [] textesPetits = {
+                new Text("Par"),
+                new Text("et")
+        };
+
+        for (Text text : textesPetits) {
+            text.setFont(Font.font("Arial", 25));
+        }
+
+        Text texteExplicatif = new Text("Travail remis à Nicolas Hurtubise et Raouf Babari. Graphismes adaptés de https://game-icon.net/ et de " +
+                "https:openclipart.org/. Développé dans le cadre du cours 420-SF3-RE - Développement d'applications dans un " +
+                "environnement graphique, au Collège de Bois-de-Boulogne.");
+        texteExplicatif.setFont(Font.font("Arial", 15));
+        texteExplicatif.setWrappingWidth(800);
+
         var btnRetour = new Button("Retour");
-        root.getChildren().add(btnRetour);   // meme chose, le bouton est en (0,0), j arrive pas a deplacer
+
+        HBox parPlusNom = new HBox();
+        parPlusNom.setAlignment(Pos.CENTER);
+        parPlusNom.setSpacing(15);
+        parPlusNom.getChildren().addAll(textesPetits[0], textesNom[0]);
+
+        HBox etPlusNom = new HBox();
+        etPlusNom.setAlignment(Pos.CENTER);
+        etPlusNom.setSpacing(15);
+        etPlusNom.getChildren().addAll(textesPetits[1], textesNom[1]);
+
+        VBox nodesScenesInfos = new VBox();
+        nodesScenesInfos.setAlignment(Pos.TOP_CENTER);
+        nodesScenesInfos.setSpacing(25);
+        nodesScenesInfos.setPadding(new Insets(10,25,25,25));
+        nodesScenesInfos.getChildren().addAll(titre, imgViewPoissonAleatoire,
+                parPlusNom, etPlusNom, texteExplicatif, btnRetour);
+
+        btnRetour.setOnAction(e -> {
+            stage.setScene(sceneAccueil());
+        });
 
         scene.setOnKeyPressed(e -> {
             if  (e.getCode() == KeyCode.ESCAPE) {
@@ -139,7 +174,7 @@ public class HelloApplication extends Application {
             }
         });
 
-
+        root.getChildren().addAll(canvas, nodesScenesInfos);
 
 
 
