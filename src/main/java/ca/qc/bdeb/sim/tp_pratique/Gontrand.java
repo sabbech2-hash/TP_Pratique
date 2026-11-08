@@ -57,7 +57,7 @@ public class Gontrand extends ObjetDuJeu {
             }
         }
 
-        updatePhysique(deltaTemps);
+        updatePhysique(deltaTemps);  //
 
     }
 
