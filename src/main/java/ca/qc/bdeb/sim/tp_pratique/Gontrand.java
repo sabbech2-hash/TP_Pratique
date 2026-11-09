@@ -1,7 +1,6 @@
 package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Camera;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -84,11 +83,10 @@ public class Gontrand extends ObjetDuJeu {
 
     }
 
+    @Override
     protected void updatePhysique(double deltaTemps) {
-        velocite = velocite.add(acceleration.multiply(deltaTemps));
-        position = position.add(velocite.multiply(deltaTemps));
+        super.updatePhysique(deltaTemps);
     }
-
 
     @Override
     public void draw(GraphicsContext context) {

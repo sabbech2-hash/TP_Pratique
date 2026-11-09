@@ -34,6 +34,7 @@ public class HelloApplication extends Application {
 
 
 
+
     private Scene sceneAccueil() {
 
         var root = new StackPane();
@@ -41,9 +42,9 @@ public class HelloApplication extends Application {
 
         Scene scene = new Scene(root, w, h);
 
-       Canvas canvas = new Canvas(w, h);
+        Canvas canvas = new Canvas(w, h);
 
-       GraphicsContext context = canvas.getGraphicsContext2D();
+        GraphicsContext context = canvas.getGraphicsContext2D();
 
        // context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
         context.setFill(Color.web("#2A7FFF"));
@@ -186,7 +187,9 @@ public class HelloApplication extends Application {
 
     private Scene sceneJeu() {
 
+
         Partie premiere = new Partie();
+        numeroNiveau = 0;
 
         Pane root = new Pane();
         Canvas canvas = new Canvas(w, h);
@@ -196,6 +199,8 @@ public class HelloApplication extends Application {
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         root.getChildren().add(canvas);
+
+        // il faudrait avoir une methode faut d'ecran qu'on pourra ensuite mettre dans AnimationTimer
 
         couleurFond = Color.hsb(random.nextInt(190, 270) ,0.84, 1.00);
         context.setFill(couleurFond);
@@ -245,8 +250,9 @@ public class HelloApplication extends Application {
         return scene;
     }
 
-    int h = 520;
-    int w = 900;
+    public static final int  h = 520;
+    public static final int w = 900;
+    private static int numeroNiveau;
 
     @Override
     public void start(Stage primaryStage)  {
