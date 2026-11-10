@@ -11,6 +11,7 @@ public class Partie {
 
         private Gontrand gontrand;
         private ArrayList<PoissonsEnnemi> poissonsEnnemi;
+        private Camera camera;
         private Color couleurFond;
         private int numeroDeNiveau = 1;  // a changer, c est pas 1, juste pour tester
         private double tempsEntreGroupePoissons;
@@ -19,12 +20,10 @@ public class Partie {
 
 
 
-      //  private Camera camera;
-
-
         public Partie() {
             this.gontrand = new Gontrand(new Point2D(0,200), new Point2D(0,0), new Point2D(0,0),  new Point2D(102,90));
             this.poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
+            this.camera = new Camera();
         }
 
     public void verifierCollision () {
@@ -52,17 +51,20 @@ public class Partie {
 
     }
 
-    public void draw(GraphicsContext context){
+    public void draw(GraphicsContext context) {
 
-        gontrand.draw(context);
+
+        gontrand.draw(context, camera);
 
         for (int i  = 0; i < poissonsEnnemi.size(); i++) {
-            poissonsEnnemi.get(i).draw(context);
+            poissonsEnnemi.get(i).draw(context, camera);
         }
 
     }
 
     public void update(double deltaTemps) {
+
+            camera.update(deltaTemps);   // ca marche pas comme je pensais
             gontrand.update(deltaTemps);
             boolean creerPoisson = creerGroupeDePoissons(deltaTemps);
             if (creerPoisson) {

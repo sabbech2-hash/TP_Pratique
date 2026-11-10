@@ -1,7 +1,6 @@
 package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.geometry.Point2D;
-import javafx.scene.Camera;
 import javafx.scene.canvas.GraphicsContext;
 
 public abstract class ObjetDuJeu {
@@ -23,7 +22,7 @@ public abstract class ObjetDuJeu {
 
     }
 
-    public abstract void draw(GraphicsContext context);
+    public abstract void draw(GraphicsContext context, Camera camera);
 
 
 

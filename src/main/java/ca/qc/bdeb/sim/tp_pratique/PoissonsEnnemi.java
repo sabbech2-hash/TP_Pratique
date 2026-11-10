@@ -53,7 +53,7 @@ public class PoissonsEnnemi extends ObjetDuJeu {
     }
 
     @Override
-    public void draw(GraphicsContext context) {
+    public void draw(GraphicsContext context, Camera camera) {
         int nombreDePoisson = random.nextInt(1,5);
 
         context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
