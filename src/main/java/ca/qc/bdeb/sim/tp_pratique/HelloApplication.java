@@ -3,9 +3,7 @@ package ca.qc.bdeb.sim.tp_pratique;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -23,16 +21,54 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class HelloApplication extends Application {
 
     private Stage stage;
     Random random = new Random();
-    private Color couleurFond;
+    private static Color couleurFond;
 
 
+    public ArrayList<Algues> positionAlgues () {
+
+
+        Image [] imagesDecor = {
+                new Image("decor1.png"),
+                new Image("decor2.png"),
+                new Image("decor3.png"),
+                new Image("decor4.png"),
+                new Image("decor5.png"),
+                new Image("decor6.png"),
+
+        };
+
+
+        int position = 0;
+
+        ArrayList <Algues> algues = new ArrayList();
+
+        while (position < w * 8) {
+            algues.add(new  Algues(position, imagesDecor[random.nextInt(imagesDecor.length)]));
+            position += 80 + random.nextInt(50,101);
+        }
+        return algues;
+
+    }
+
+
+    public void dessinerFondEcran (GraphicsContext context, ArrayList<Algues> algues) {
+
+        context.setFill(couleurFond);
+        context.fillRect(0, 0, w, h);
+
+        for (Algues a : algues) {
+            context.drawImage(a.getImage(), a.getPosition().getX(), a.getPosition().getY(), 80, 119);
+        }
+
+
+    }
 
 
     private Scene sceneAccueil() {
@@ -200,11 +236,11 @@ public class HelloApplication extends Application {
 
         root.getChildren().add(canvas);
 
-        // il faudrait avoir une methode faut d'ecran qu'on pourra ensuite mettre dans AnimationTimer
+        ArrayList <Algues> algues = positionAlgues();
 
         couleurFond = Color.hsb(random.nextInt(190, 270) ,0.84, 1.00);
-        context.setFill(couleurFond);
-        context.fillRect(0, 0, w, h);
+
+
 
         scene.setOnKeyPressed((e)-> {
             if (e.getCode() == KeyCode.ESCAPE) {
@@ -225,14 +261,14 @@ public class HelloApplication extends Application {
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps)  * 1e-9;
 
-                context.setFill(couleurFond);  // permet de garder la couleur de fond, même si on change couleur context pour x raison
-                context.fillRect(0, 0, w, h);
+
+               context.fillRect(0, 0, w, h);
+
+
+                dessinerFondEcran(context, algues);
 
                 premiere.update(deltaTemps);
                 premiere.draw(context);
-
-
-
 
 
                 dernierTemps = temps;

@@ -24,11 +24,15 @@ public abstract class ObjetDuJeu {
 
     public abstract void draw(GraphicsContext context, Camera camera);
 
+    public boolean verifierCollision(ObjetDuJeu autre) {
+       //
+        return true;
+    }
 
 
-
-
-
+    public Point2D getVelocite() {
+        return velocite;
+    }
 
     public double getHaut() {
         return 0.0;

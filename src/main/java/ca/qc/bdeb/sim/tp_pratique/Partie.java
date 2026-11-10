@@ -9,15 +9,13 @@ import java.util.Random;
 
 public class Partie {
 
-        private Gontrand gontrand;
+        public static Gontrand gontrand;
         private ArrayList<PoissonsEnnemi> poissonsEnnemi;
         private Camera camera;
-        private Color couleurFond;
         private int numeroDeNiveau = 1;  // a changer, c est pas 1, juste pour tester
         private double tempsEntreGroupePoissons;
         private double tempsDepuisDernierGroupePoissons;
         Random random = new Random();
-
 
 
         public Partie() {
@@ -25,10 +23,6 @@ public class Partie {
             this.poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
             this.camera = new Camera();
         }
-
-    public void verifierCollision () {
-//
-    }
 
     public boolean creerGroupeDePoissons(double deltaTemps) {
 
@@ -43,13 +37,6 @@ public class Partie {
         return false;
     }
 
-    public void drawFondNiveau(GraphicsContext context) {
-
-
-        context.setFill(couleurFond);
-        context.fillRect(0, 0, HelloApplication.w, HelloApplication.h);
-
-    }
 
     public void draw(GraphicsContext context) {
 

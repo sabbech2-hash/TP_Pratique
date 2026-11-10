@@ -86,6 +86,7 @@ public class Gontrand extends ObjetDuJeu {
     @Override
     protected void updatePhysique(double deltaTemps) {
         super.updatePhysique(deltaTemps);
+
     }
 
     @Override
@@ -123,6 +124,10 @@ public class Gontrand extends ObjetDuJeu {
     public Image getImage() {
         return image;
     }
+
+    //public void enCollision
+
+
 
 }
 
