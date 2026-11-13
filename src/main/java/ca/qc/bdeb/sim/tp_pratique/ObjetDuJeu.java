@@ -29,6 +29,9 @@ public abstract class ObjetDuJeu {
         return true;
     }
 
+    public Point2D getPosition() {
+        return position;
+    }
 
     public Point2D getVelocite() {
         return velocite;

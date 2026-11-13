@@ -59,8 +59,9 @@ public class Partie {
 
     public void update(double deltaTemps) {
 
-        camera.update(deltaTemps);   // ca marche pas comme je pensais
         gontrand.update(deltaTemps);
+        camera.update(deltaTemps);
+
         boolean creerPoisson = creerGroupeDePoissons(deltaTemps);
         if (creerPoisson) {
             int nombreDePoissons = random.nextInt(1, 5);

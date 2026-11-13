@@ -18,13 +18,13 @@ public class Algues {
     public void draw(GraphicsContext context, Camera camera) {
 
 
-        Point2D positionEcran = camera.coordoEcran(position);
+        double positionEcran = camera.coordoEcran(position);
 
         // image de Gontrand
         context.drawImage(
                 image,
-                positionEcran.getX(),
-                positionEcran.getY(),
+                positionEcran,
+                position.getY(),
                 taille.getX(),
                 taille.getY()
         );
