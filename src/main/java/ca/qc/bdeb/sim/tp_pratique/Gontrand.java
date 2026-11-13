@@ -93,13 +93,14 @@ public class Gontrand extends ObjetDuJeu {
     public void draw(GraphicsContext context, Camera camera) {
 
 
-        double positionEcran = camera.coordoEcran(position);
+        Point2D positionEcran = camera.coordoEcran(position);
+
 
         // image de Gontrand
         context.drawImage(
                 image,
-                positionEcran,
-                position.getY(),
+                positionEcran.getX(),
+                positionEcran.getY(),
                 taille.getX(),
                 taille.getY()
         );

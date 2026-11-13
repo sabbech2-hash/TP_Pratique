@@ -29,6 +29,10 @@ public abstract class ObjetDuJeu {
         return true;
     }
 
+    public Point2D getTaille() {
+        return taille;
+    }
+
     public Point2D getPosition() {
         return position;
     }

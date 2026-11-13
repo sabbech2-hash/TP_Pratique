@@ -60,6 +60,19 @@ public class Partie {
     public void update(double deltaTemps) {
 
         gontrand.update(deltaTemps);
+        // À voir si on met ça dans Gontrand ou ici
+        gontrand.position = new Point2D(Math.clamp(
+                gontrand.position.getX(),
+                camera.getPositionCamera().getX(),
+                camera.getLargeurNiveau() - gontrand.getTaille().getX()
+        ),
+                Math.clamp(
+                        gontrand.position.getY(),
+                        0,
+                        HelloApplication.h - gontrand.getTaille().getY()
+                )
+        );
+
         camera.update(deltaTemps);
 
         boolean creerPoisson = creerGroupeDePoissons(deltaTemps);
