@@ -28,10 +28,10 @@ public class HelloApplication extends Application {
 
     private Stage stage;
     Random random = new Random();
-    private static Color couleurFond;
+    //private static Color couleurFond;
 
 
-    public ArrayList<Algues> positionAlgues () {
+   /* public ArrayList<Algues> positionAlgues () {
 
 
         Image [] imagesDecor = {
@@ -56,20 +56,20 @@ public class HelloApplication extends Application {
         return algues;
 
     }
+*/
 
-
-    public void dessinerFondEcran (GraphicsContext context, ArrayList<Algues> algues) {
+    /*public void dessinerFondEcran (GraphicsContext context, ArrayList<Algues> algues) {
 
         context.setFill(couleurFond);
         context.fillRect(0, 0, w, h);
 
         for (Algues a : algues) {
-            context.drawImage(a.getImage(), a.getPosition().getX(), a.getPosition().getY(), 80, 119);
+            //context.drawImage(a.getImage(), a.getPosition().getX(), a.getPosition().getY(), 80, 119);
         }
 
 
     }
-
+*/
 
     private Scene sceneAccueil() {
 
@@ -236,9 +236,9 @@ public class HelloApplication extends Application {
 
         root.getChildren().add(canvas);
 
-        ArrayList <Algues> algues = positionAlgues();
+        //ArrayList <Algues> algues = positionAlgues();
 
-        couleurFond = Color.hsb(random.nextInt(190, 270) ,0.84, 1.00);
+        //couleurFond = Color.hsb(random.nextInt(190, 270) ,0.84, 1.00);
 
 
 
@@ -265,7 +265,7 @@ public class HelloApplication extends Application {
                context.fillRect(0, 0, w, h);
 
 
-                dessinerFondEcran(context, algues);
+                //dessinerFondEcran(context, algues);
 
                 premiere.update(deltaTemps);
                 premiere.draw(context);

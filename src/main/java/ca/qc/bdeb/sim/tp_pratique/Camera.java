@@ -12,5 +12,6 @@ public class Camera {
 
     public void update (double deltaTemps) {
         positionCamera = positionCamera.add(Partie.gontrand.getVelocite().multiply(deltaTemps));
+
     }
 }
