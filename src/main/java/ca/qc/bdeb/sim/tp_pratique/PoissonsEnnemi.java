@@ -21,13 +21,13 @@ public class PoissonsEnnemi extends ObjetDuJeu {
 
     };
 
-    public PoissonsEnnemi(int niveau) {
+    public PoissonsEnnemi(int niveau, Camera camera) {
 
 
 
         double positionYInitiale = random.nextDouble(0.2 * HelloApplication.h, 0.8 * HelloApplication.h);
 
-        position = new Point2D(HelloApplication.w, positionYInitiale);// techniquement pas besoin de this.
+        position = new Point2D(HelloApplication.w + camera.getPositionCamera().getX(), positionYInitiale);// techniquement pas besoin de this.
 
         double velociteXInitiale = -(100 * Math.pow(niveau, 0.33) + 200);
         double velociteYInitiale = random.nextDouble(-100,100);
@@ -56,7 +56,16 @@ public class PoissonsEnnemi extends ObjetDuJeu {
     public void draw(GraphicsContext context, Camera camera) {
         int nombreDePoisson = random.nextInt(1,5);
 
-        context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
+        Point2D positionEcran = camera.coordoEcran(position);
+
+        context.drawImage(
+                image,
+                positionEcran.getX(),
+                positionEcran.getY(),
+                taille.getX(),
+                taille.getY()
+        );
+        //context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
 
     }
 }

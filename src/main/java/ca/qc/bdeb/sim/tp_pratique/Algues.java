@@ -20,7 +20,6 @@ public class Algues {
 
         Point2D positionEcran = camera.coordoEcran(position);
 
-        // image de Gontrand
         context.drawImage(
                 image,
                 positionEcran.getX(),

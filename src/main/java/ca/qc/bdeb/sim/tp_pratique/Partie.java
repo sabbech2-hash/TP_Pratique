@@ -60,6 +60,7 @@ public class Partie {
     public void update(double deltaTemps) {
 
         gontrand.update(deltaTemps);
+        camera.update(deltaTemps);
         // À voir si on met ça dans Gontrand ou ici
         gontrand.position = new Point2D(Math.clamp(
                 gontrand.position.getX(),
@@ -73,19 +74,16 @@ public class Partie {
                 )
         );
 
-        camera.update(deltaTemps);
-
         boolean creerPoisson = creerGroupeDePoissons(deltaTemps);
         if (creerPoisson) {
             int nombreDePoissons = random.nextInt(1, 5);
             for (int i = 0; i < nombreDePoissons; i++) {
-                poissonsEnnemi.add(new PoissonsEnnemi(numeroDeNiveau));   // on ajoute des poissons avec l initialisation
+                poissonsEnnemi.add(new PoissonsEnnemi(numeroDeNiveau, camera));   // on ajoute des poissons avec l initialisation
             }
         }
         for (int i = 0; i < poissonsEnnemi.size(); i++) {
             poissonsEnnemi.get(i).update(deltaTemps);
         }
-
 
     }
 
