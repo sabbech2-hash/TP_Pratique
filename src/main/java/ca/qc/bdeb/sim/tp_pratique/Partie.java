@@ -61,7 +61,20 @@ public class Partie {
 
         gontrand.update(deltaTemps);
         camera.update(deltaTemps);
+
         // À voir si on met ça dans Gontrand ou ici
+
+        // À voir si c'est du copié collé
+        if (Math.clamp(gontrand.position.getX(), camera.getPositionCamera().getX(),
+                camera.getLargeurNiveau() - gontrand.getTaille().getX()) != gontrand.position.getX()) {
+            gontrand.velocite = new Point2D(0, gontrand.velocite.getY());
+        }
+
+        if (Math.clamp(gontrand.position.getY(), camera.getPositionCamera().getY(),
+                camera.getLargeurNiveau() - gontrand.getTaille().getY()) != gontrand.position.getY()) {
+            gontrand.velocite = new Point2D(gontrand.velocite.getX(), 0);
+        }
+
         gontrand.position = new Point2D(Math.clamp(
                 gontrand.position.getX(),
                 camera.getPositionCamera().getX(),
@@ -84,7 +97,6 @@ public class Partie {
         for (int i = 0; i < poissonsEnnemi.size(); i++) {
             poissonsEnnemi.get(i).update(deltaTemps);
         }
-
     }
 
     private ArrayList<Algues> positionAlgues() {
