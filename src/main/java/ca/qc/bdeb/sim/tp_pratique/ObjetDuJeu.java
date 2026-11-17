@@ -25,7 +25,10 @@ public abstract class ObjetDuJeu {
     public abstract void draw(GraphicsContext context, Camera camera);
 
     public boolean verifierCollision(ObjetDuJeu autre) {
-       //
+      //  if (getBas() > autre.getBas() || autre.getHaut() )
+
+
+
         return true;
     }
 
@@ -42,7 +45,7 @@ public abstract class ObjetDuJeu {
     }
 
     public double getHaut() {
-        return 0.0;
+        return 0.0;   //  a modifier pour que ca retourne le haut du rectangle (objet)
     }
 
     public double getBas() {
