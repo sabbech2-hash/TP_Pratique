@@ -13,6 +13,7 @@ public class Algues {
         this.position = new Point2D(position, HelloApplication.h - 109);
         this.image = image;
         taille = new Point2D(80,119);
+        // nouveau commit
     }
 
     public void draw(GraphicsContext context, Camera camera) {
