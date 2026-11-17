@@ -49,13 +49,11 @@ public class Partie {
 
         dessinerFondEcran(context, algues);
 
-
-        gontrand.draw(context, camera);
-
         for (int i = 0; i < poissonsEnnemi.size(); i++) {
             poissonsEnnemi.get(i).draw(context, camera);
         }
 
+        gontrand.draw(context, camera);
     }
 
     public void update(double deltaTemps) {
@@ -66,15 +64,12 @@ public class Partie {
         // À voir si on met ça dans Gontrand ou ici
 
         // À voir si c'est du copié collé
-        if (Math.clamp(gontrand.position.getX(), camera.getPositionCamera().getX(),
-                camera.getLargeurNiveau() - gontrand.getTaille().getX()) != gontrand.position.getX()) {
-            gontrand.velocite = new Point2D(0, gontrand.velocite.getY());
-        }
+        boolean estClampX = Math.clamp(gontrand.position.getX(), camera.getPositionCamera().getX(), camera.getLargeurNiveau() - gontrand.getTaille().getX()) != gontrand.position.getX();
+        boolean estClampY = Math.clamp(gontrand.position.getY(), camera.getPositionCamera().getY(), camera.getLargeurNiveau() - gontrand.getTaille().getY()) != gontrand.position.getY();
 
-        if (Math.clamp(gontrand.position.getY(), camera.getPositionCamera().getY(),
-                camera.getLargeurNiveau() - gontrand.getTaille().getY()) != gontrand.position.getY()) {
-            gontrand.velocite = new Point2D(gontrand.velocite.getX(), 0);
-        }
+        if (estClampX)  gontrand.velocite = new Point2D(0, gontrand.velocite.getY());
+        if (estClampY)  gontrand.velocite = new Point2D(gontrand.velocite.getX(), 0);
+
 
         gontrand.position = new Point2D(Math.clamp(
                 gontrand.position.getX(),

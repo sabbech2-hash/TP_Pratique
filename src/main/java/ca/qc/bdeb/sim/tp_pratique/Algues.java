@@ -4,19 +4,15 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Algues {
-    private Point2D position;
-    private Image image;
-    private Point2D taille;
+public class Algues extends ObjetDuJeu {
 
     public Algues(int position, Image image) {
         this.position = new Point2D(position, HelloApplication.h - 109);
         this.image = image;
         taille = new Point2D(80,119);
-        // nouveau commit
     }
 
-    public void draw(GraphicsContext context, Camera camera) {
+    /*public void draw(GraphicsContext context, Camera camera) {
 
 
         Point2D positionEcran = camera.coordoEcran(position);
@@ -28,13 +24,13 @@ public class Algues {
                 taille.getX(),
                 taille.getY()
         );
-    }
+    }*/
 
-    public Point2D getPosition() {
+    /*public Point2D getPosition() {
         return position;
-    }
+    }*/
 
-    public Image getImage() {
+    /*public Image getImage() {
         return image;
-    }
+    }*/
 }

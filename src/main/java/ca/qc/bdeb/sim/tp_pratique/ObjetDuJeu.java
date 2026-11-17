@@ -2,12 +2,14 @@ package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 
 public abstract class ObjetDuJeu {
     protected Point2D position;
     protected Point2D velocite;
     protected Point2D acceleration;
     protected Point2D taille;
+    protected Image image;
 
     public void update(double deltaTemps) {
 
@@ -22,7 +24,19 @@ public abstract class ObjetDuJeu {
 
     }
 
-    public abstract void draw(GraphicsContext context, Camera camera);
+    public void draw(GraphicsContext context, Camera camera){
+        Point2D positionEcran = camera.coordoEcran(position);
+
+
+        // image de Gontrand
+        context.drawImage(
+                image,
+                positionEcran.getX(),
+                positionEcran.getY(),
+                taille.getX(),
+                taille.getY()
+        );
+    }
 
     public boolean verifierCollision(ObjetDuJeu autre) {
       //  if (getBas() > autre.getBas() || autre.getHaut() )
@@ -30,6 +44,10 @@ public abstract class ObjetDuJeu {
 
 
         return true;
+    }
+
+    public Image getImage() {
+        return image;
     }
 
     public Point2D getTaille() {

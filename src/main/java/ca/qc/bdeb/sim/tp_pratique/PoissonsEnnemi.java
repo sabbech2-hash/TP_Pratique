@@ -8,22 +8,18 @@ import java.util.Random;
 
 public class PoissonsEnnemi extends ObjetDuJeu {
 
-
-    private Image image;
     Random random = new Random();
     private Image [] imagesPoissons = {
-
             new Image("poisson1.png"),
             new Image("poisson2.png"),
             new Image("poisson3.png"),
             new Image("poisson4.png"),
             new Image("poisson5.png"),
-
     };
 
+
+
     public PoissonsEnnemi(int niveau, Camera camera) {
-
-
 
         double positionYInitiale = random.nextDouble(0.2 * HelloApplication.h, 0.8 * HelloApplication.h);
 
@@ -52,7 +48,7 @@ public class PoissonsEnnemi extends ObjetDuJeu {
         super.updatePhysique(deltaTemps);
     }
 
-    @Override
+    /*@Override
     public void draw(GraphicsContext context, Camera camera) {
         int nombreDePoisson = random.nextInt(1,5);
 
@@ -67,5 +63,5 @@ public class PoissonsEnnemi extends ObjetDuJeu {
         );
         //context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
 
-    }
+    }*/
 }

@@ -10,7 +10,6 @@ public class Gontrand extends ObjetDuJeu {
 
     private static int vie = 4;   // nombre de vie de Gontrand n'est pas attribut de classe
 
-    private Image image;
 
     public Gontrand(Point2D position, Point2D velocite, Point2D acceleration, Point2D taille) {
         this.position = position;
@@ -110,12 +109,10 @@ public class Gontrand extends ObjetDuJeu {
 
     }
 
-    @Override
+   /* @Override
     public void draw(GraphicsContext context, Camera camera) {
 
-
         Point2D positionEcran = camera.coordoEcran(position);
-
 
         // image de Gontrand
         context.drawImage(
@@ -125,27 +122,16 @@ public class Gontrand extends ObjetDuJeu {
                 taille.getX(),
                 taille.getY()
         );
-
-        // barre de vie de Gontrand
-        context.setStroke(Color.WHITE);
-        context.strokeRect(10,10,150,35);
-
-        // methode pour verifier si Gontrand perdu des vies
-
-        context.setFill(Color.WHITE);
-        context.fillRect(10, 10, 150, 35);
-        context.drawImage(new Image("etoile.png"),  170, 12);
-
-    }
+    }*/
 
     public void perduVie() {
         // doit voir si Gontrand est rentrer en collision
     }
     public void perduDroite() {}
 
-    public Image getImage() {
+    /*public Image getImage() {
         return image;
-    }
+    }*/
 
     //public void enCollision
 
@@ -153,10 +139,18 @@ public class Gontrand extends ObjetDuJeu {
 
 }
 
+/*
 
+// barre de vie de Gontrand
+        context.setStroke(Color.WHITE);
+        context.strokeRect(10,10,150,35);
 
+// methode pour verifier si Gontrand perdu des vies
 
-
+        context.setFill(Color.WHITE);
+        context.fillRect(10, 10, 150, 35);
+        context.drawImage(new Image("etoile.png"),  170, 12);
+*/
 
 
 
