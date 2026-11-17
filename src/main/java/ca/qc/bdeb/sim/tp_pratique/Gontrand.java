@@ -22,13 +22,15 @@ public class Gontrand extends ObjetDuJeu {
 
     @Override
     public void update(double deltaTemps) {
-        boolean gauche = Input.isKeyPressed(KeyCode.LEFT);
-        boolean droite = Input.isKeyPressed(KeyCode.RIGHT);
-        boolean haut = Input.isKeyPressed(KeyCode.UP);
-        boolean bas = Input.isKeyPressed(KeyCode.DOWN);
+        boolean estGauche = Input.isKeyPressed(KeyCode.LEFT);
+        boolean estDroite = Input.isKeyPressed(KeyCode.RIGHT);
+        boolean estHaut = Input.isKeyPressed(KeyCode.UP);
+        boolean estBas = Input.isKeyPressed(KeyCode.DOWN);
+        boolean estStableEnX = !(estDroite || estGauche);
+        boolean estStableEnY = !(estHaut || estBas);
 
-        acceleration = new Point2D(mouvementBidirectionnel(gauche, droite),
-                mouvementBidirectionnel(haut, bas));
+        acceleration = new Point2D(mouvementBidirectionnel(estGauche, estDroite),
+                mouvementBidirectionnel(estHaut, estBas));
 
         velocite = new Point2D(velociteMax(velocite.getX()), velociteMax(velocite.getY()));
 
@@ -65,16 +67,16 @@ public class Gontrand extends ObjetDuJeu {
         //}
 
 
-        if (!(droite || gauche) && velocite.getX() > 0) {
+        if (estStableEnX && velocite.getX() > 0) {
             acceleration = new Point2D(-400, acceleration.getY());
-        } else if  (!(gauche || droite) && velocite.getX() < 0) {
+        } else if  (estStableEnX && velocite.getX() < 0) {
             acceleration = new Point2D(400, acceleration.getY());
         }
 
 
-        if (!(bas || haut) && velocite.getY() > 0) {
+        if (estStableEnY && velocite.getY() > 0) {
             acceleration = new Point2D(acceleration.getX(), -400);
-        }  else if (!(haut || bas) && velocite.getY() < 0) {
+        }  else if (estStableEnY && velocite.getY() < 0) {
             acceleration = new Point2D(acceleration.getX(), 400);
         }
 
