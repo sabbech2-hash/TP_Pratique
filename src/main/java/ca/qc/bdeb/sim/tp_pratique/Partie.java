@@ -13,7 +13,7 @@ public class Partie {
     public static Gontrand gontrand;
     private ArrayList<PoissonsEnnemi> poissonsEnnemi;
     private Camera camera;
-    private int numeroDeNiveau = 1;  // a changer, c est pas 1, juste pour tester
+    private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester
     private double tempsEntreGroupePoissons;
     private double tempsDepuisDernierGroupePoissons;
     private static Color couleurFond;
@@ -22,11 +22,12 @@ public class Partie {
 
 
     public Partie() {
-        this.gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
-        this.poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
-        this.camera = new Camera();
-        algues = positionAlgues();
-        couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
+        //this.gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
+        //this.poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
+        //this.camera = new Camera();
+        //algues = positionAlgues();
+        //couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
+        nouveauNiveau();
     }
 
     public boolean creerGroupeDePoissons(double deltaTemps) {
@@ -97,6 +98,20 @@ public class Partie {
         for (int i = 0; i < poissonsEnnemi.size(); i++) {
             poissonsEnnemi.get(i).update(deltaTemps);
         }
+
+        if (gontrand.getDroite() >=  camera.getLargeurNiveau()) {
+            nouveauNiveau();
+        }
+    }
+
+    private void nouveauNiveau() {
+        gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
+        camera = new Camera();
+        numeroDeNiveau++;
+        algues = positionAlgues();
+        couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
+        poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
+
     }
 
     private ArrayList<Algues> positionAlgues() {
@@ -126,7 +141,7 @@ public class Partie {
     }
 
 
-    public void dessinerFondEcran(GraphicsContext context, ArrayList<Algues> algues) {
+    private void dessinerFondEcran(GraphicsContext context, ArrayList<Algues> algues) {
 
         context.setFill(couleurFond);
         context.fillRect(0, 0, HelloApplication.w, HelloApplication.h);

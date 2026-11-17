@@ -54,7 +54,7 @@ public abstract class ObjetDuJeu {
     }
 
     public double getDroite() {
-        return 0.0;
+        return position.getX() + taille.getX();
     }
 
     public Point2D getCentre() {
