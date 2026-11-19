@@ -48,6 +48,10 @@ public class ObjetDuJeu {
        return estEnCollison;
     }
 
+    public Image getImage() {
+        return image;
+    }
+
     public Point2D getTaille() {
         return taille;
     }
