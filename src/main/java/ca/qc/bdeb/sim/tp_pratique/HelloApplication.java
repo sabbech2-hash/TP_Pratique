@@ -265,7 +265,7 @@ public class HelloApplication extends Application {
 
                 premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
                 premiere.collisionAvecPoissonsEnnemis();
-                premiere.co
+
 
 
                 premiere.draw(context);

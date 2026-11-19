@@ -21,7 +21,7 @@ public class Partie {
     private Baril baril;
     private Camera camera;
     private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
-    private double tempsDepuisDebutNiveau = 0;
+    private static double tempsDepuisDebutNiveau = 0;
     private double tempsEntreGroupePoissons;
     private double tempsDepuisDernierGroupePoissons;
     private double tempsDepuisDernierTir;
@@ -129,6 +129,8 @@ public class Partie {
         gontrand.update(deltaTemps);
         camera.update(deltaTemps);
 
+        baril.update(deltaTemps);
+
         // À voir si on met ça dans Gontrand ou ici
 
         // À voir si c'est du copié collé
@@ -167,7 +169,7 @@ public class Partie {
         }
 
         if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
-            projectiles.add(new EtoileDeMer(gontrand.getCentre()));
+            projectiles.add(new EtoileDeMer(gontrand.getCentre()));  // a changer 100%%%%%%%%%%
             tempsDepuisDernierTir = 0;
         }
 
@@ -239,5 +241,9 @@ public class Partie {
 
     }
 
+
+    public static double getTempsDepuisDebutNiveau(){
+        return tempsDepuisDebutNiveau;
+    }
 
 }
