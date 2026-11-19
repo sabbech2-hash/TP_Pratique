@@ -31,6 +31,7 @@ public class EtoileDeMer extends Projectiles {
         return super.verifierCollision(autre);
     }
 
+
     @Override
     public void update(double deltaTemps) {
         super.update(deltaTemps);

@@ -18,6 +18,7 @@ public class Partie {
     public static Gontrand gontrand;
     private ArrayList<PoissonsEnnemi> poissonsEnnemi;
     private ArrayList<Projectiles> projectiles;
+    private Baril baril;
     private Camera camera;
     private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
     private double tempsDepuisDebutNiveau = 0;
@@ -61,9 +62,29 @@ public class Partie {
 
     }
 
+
+    public void collisionAvecPoissonsEnnemis () {
+        for (PoissonsEnnemi poisson : poissonsEnnemi) {
+            for (Projectiles projectile : projectiles) {
+               if (projectile.verifierCollision(poisson)) {
+                   poissonsEnnemi.remove(poisson);  // vu qu'on le remove, il ne fait plus partie du ArrayList qu'on draw constamment = disparait
+               }
+            }
+        }
+
+    }
+
+    public void collisionGontrandAvecBaril() {
+        if (gontrand.verifierCollision(baril)) {
+            // generate un random projectiles parmi la liste de projectiles en haut
+        }
+    }
+
     public void draw(GraphicsContext context) {
 
         dessinerFondEcran(context, algues);
+
+        baril.draw(context, camera);
 
         if (jeuTermine) {
 
@@ -169,6 +190,7 @@ public class Partie {
         couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
         poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
         projectiles = new ArrayList<>();
+        baril = new  Baril();
 
     }
 

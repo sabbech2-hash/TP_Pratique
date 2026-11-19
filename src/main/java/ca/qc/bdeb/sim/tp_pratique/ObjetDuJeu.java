@@ -28,7 +28,7 @@ public class ObjetDuJeu {
         Point2D positionEcran = camera.coordoEcran(position);
 
 
-        // image de Gontrand
+        // image d'objet du jeu
         context.drawImage(
                 image,
                 positionEcran.getX(),
