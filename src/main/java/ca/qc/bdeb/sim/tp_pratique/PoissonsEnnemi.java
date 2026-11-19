@@ -65,7 +65,7 @@ public class PoissonsEnnemi extends ObjetDuJeu {
                 taille.getX(),
                 taille.getY()
         );
-        //context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
+        context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
 
     }
 }

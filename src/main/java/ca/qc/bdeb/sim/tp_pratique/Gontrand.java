@@ -9,6 +9,8 @@ import javafx.scene.paint.Color;
 public class Gontrand extends ObjetDuJeu {
 
     private static int vie = 4;   // nombre de vie de Gontrand n'est pas attribut de classe
+    private double tempsInvincible = 0;
+    private double tempsDepuisCollision = 0;
 
     private Image image;
 
@@ -80,6 +82,16 @@ public class Gontrand extends ObjetDuJeu {
             acceleration = new Point2D(acceleration.getX(), 400);
         }
 
+        if (tempsInvincible > 0) {
+            tempsInvincible -= deltaTemps;
+            tempsDepuisCollision += deltaTemps;
+
+
+            if (tempsInvincible < 0) {
+               image = new Image("gontrand.png");
+            }
+        }
+
 
         updatePhysique(deltaTemps);
 
@@ -113,24 +125,34 @@ public class Gontrand extends ObjetDuJeu {
     @Override
     public void draw(GraphicsContext context, Camera camera) {
 
-
         Point2D positionEcran = camera.coordoEcran(position);
 
+     if (tempsInvincible > 0) {
 
-        // image de Gontrand
-        context.drawImage(
-                image,
-                positionEcran.getX(),
-                positionEcran.getY(),
-                taille.getX(),
-                taille.getY()
-        );
+        if ((tempsDepuisCollision % 0.5) < 0.25) {
+            context.drawImage(
+                    image,
+                    positionEcran.getX(),
+                    positionEcran.getY(),
+                    taille.getX(),
+                    taille.getY());
+        }
+
+        } else {
+
+            //  image de Gontrand
+            context.drawImage(
+                    new Image("gontrand.png"),
+                    positionEcran.getX(),
+                    positionEcran.getY(),
+                    taille.getX(),
+                    taille.getY());
+        }
 
         // barre de vie de Gontrand
         context.setStroke(Color.WHITE);
         context.strokeRect(10,10,150,35);
 
-        // methode pour verifier si Gontrand perdu des vies
 
         context.setFill(Color.WHITE);
         context.fillRect(10, 10, 150, 35);
@@ -138,8 +160,22 @@ public class Gontrand extends ObjetDuJeu {
 
     }
 
-    public void perduVie() {
-        // doit voir si Gontrand est rentrer en collision
+
+    @Override
+    public boolean verifierCollision(ObjetDuJeu autre) {
+        return super.verifierCollision(autre);
+    }
+
+
+    public boolean estInvincible() {
+        return tempsInvincible > 0;
+    }
+
+    public void perdreVie() {
+       vie--;
+
+       image = new  Image("gontrand-outch.png");
+       tempsInvincible = 2;
     }
     public void perduDroite() {}
 

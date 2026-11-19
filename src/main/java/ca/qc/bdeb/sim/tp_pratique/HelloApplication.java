@@ -225,7 +225,6 @@ public class HelloApplication extends Application {
 
 
         Partie premiere = new Partie();
-        numeroNiveau = 0;
 
         Pane root = new Pane();
         Canvas canvas = new Canvas(w, h);
@@ -235,12 +234,6 @@ public class HelloApplication extends Application {
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         root.getChildren().add(canvas);
-
-        //ArrayList <Algues> algues = positionAlgues();
-
-        //couleurFond = Color.hsb(random.nextInt(190, 270) ,0.84, 1.00);
-
-
 
         scene.setOnKeyPressed((e)-> {
             if (e.getCode() == KeyCode.ESCAPE) {
@@ -268,6 +261,7 @@ public class HelloApplication extends Application {
                 //dessinerFondEcran(context, algues);
 
                 premiere.update(deltaTemps);
+                premiere.collisionGontrandEtPoissonsEnnemis();
                 premiere.draw(context);
 
 

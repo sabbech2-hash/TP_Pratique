@@ -4,6 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,7 +14,8 @@ public class Partie {
     public static Gontrand gontrand;
     private ArrayList<PoissonsEnnemi> poissonsEnnemi;
     private Camera camera;
-    private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester
+    private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
+    private double tempsDepuisDebutNiveau = 0;
     private double tempsEntreGroupePoissons;
     private double tempsDepuisDernierGroupePoissons;
     private static Color couleurFond;
@@ -43,11 +45,27 @@ public class Partie {
         return false;
     }
 
+    public void collisionGontrandEtPoissonsEnnemis () {
+        for (PoissonsEnnemi poisson : poissonsEnnemi) {
+            if (gontrand.verifierCollision(poisson) && !gontrand.estInvincible()) {
+                gontrand.perdreVie();
+
+            }
+        }
+
+    }
 
     public void draw(GraphicsContext context) {
 
-
         dessinerFondEcran(context, algues);
+
+        // ESSENTIEL: vu que c un pane root, on dessine dans le bon ordre, pas hasard
+
+        if (tempsDepuisDebutNiveau < 4) {
+            context.setFont(Font.font("Purisa", 50));
+            context.setFill(Color.BLACK);
+            context.fillText("NIVEAU " + numeroDeNiveau, (HelloApplication.w)/2 - 100, (HelloApplication.h)/2);
+        }
 
 
         gontrand.draw(context, camera);
@@ -59,6 +77,8 @@ public class Partie {
     }
 
     public void update(double deltaTemps) {
+
+        tempsDepuisDebutNiveau += deltaTemps;
 
         gontrand.update(deltaTemps);
         camera.update(deltaTemps);
@@ -107,6 +127,7 @@ public class Partie {
     private void nouveauNiveau() {
         gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
         camera = new Camera();
+        tempsDepuisDebutNiveau = 0;
         numeroDeNiveau++;
         algues = positionAlgues();
         couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
