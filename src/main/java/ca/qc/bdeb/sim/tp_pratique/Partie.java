@@ -3,21 +3,27 @@ package ca.qc.bdeb.sim.tp_pratique;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Partie {
 
+
+    private boolean jeuTermine = false;
     public static Gontrand gontrand;
     private ArrayList<PoissonsEnnemi> poissonsEnnemi;
+    private ArrayList<Projectiles> projectiles;
     private Camera camera;
     private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
     private double tempsDepuisDebutNiveau = 0;
     private double tempsEntreGroupePoissons;
     private double tempsDepuisDernierGroupePoissons;
+    private double tempsDepuisDernierTir;
     private static Color couleurFond;
     private ArrayList<Algues> algues;
     Random random = new Random();
@@ -59,6 +65,13 @@ public class Partie {
 
         dessinerFondEcran(context, algues);
 
+        if (jeuTermine) {
+
+            context.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
+            context.setFill(Color.DARKRED);
+            context.fillText("FIN DE PARTIE", (HelloApplication.w/2) - 180, (HelloApplication.h/2));
+        }
+
         // ESSENTIEL: vu que c un pane root, on dessine dans le bon ordre, pas hasard
 
         if (tempsDepuisDebutNiveau < 4) {
@@ -76,11 +89,21 @@ public class Partie {
         }
 
         gontrand.draw(context, camera);
+
+        for (Projectiles projectile : projectiles) {
+            projectile.draw(context, camera);
+        }
     }
 
     public void update(double deltaTemps) {
 
+        if (jeuTermine) {
+            //
+        }
+
+
         tempsDepuisDebutNiveau += deltaTemps;
+        tempsDepuisDernierTir += deltaTemps;
 
         gontrand.update(deltaTemps);
         camera.update(deltaTemps);
@@ -118,10 +141,24 @@ public class Partie {
             poissonsEnnemi.get(i).update(deltaTemps);
         }
 
-        if (gontrand.getDroite() >=  camera.getLargeurNiveau()) {
+        if (gontrand.getDroite() >= camera.getLargeurNiveau()) {
             nouveauNiveau();
         }
+
+        if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
+            projectiles.add(new EtoileDeMer(gontrand.getCentre()));
+            tempsDepuisDernierTir = 0;
+        }
+
+        for (Projectiles projectile : projectiles) {
+            projectile.update(deltaTemps);
+        }
+
+
+        verifierEtatDePartie();
+
     }
+
 
     private void nouveauNiveau() {
         gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
@@ -131,6 +168,7 @@ public class Partie {
         algues = positionAlgues();
         couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
         poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
+        projectiles = new ArrayList<>();
 
     }
 
@@ -158,6 +196,12 @@ public class Partie {
         }
         return algues;
 
+    }
+
+    public void verifierEtatDePartie() {
+        if (gontrand.getVie() == 0) {
+            jeuTermine = true;
+        }
     }
 
 

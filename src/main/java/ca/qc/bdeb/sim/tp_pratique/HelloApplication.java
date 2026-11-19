@@ -261,7 +261,7 @@ public class HelloApplication extends Application {
                 //dessinerFondEcran(context, algues);
 
                 premiere.update(deltaTemps);
-                premiere.collisionGontrandEtPoissonsEnnemis();
+                premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
                 premiere.draw(context);
 
 

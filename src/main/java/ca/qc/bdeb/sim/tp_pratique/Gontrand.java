@@ -12,7 +12,7 @@ public class Gontrand extends ObjetDuJeu {
     private double tempsInvincible = 0;
     private double tempsDepuisCollision = 0;
 
-    private Image image;
+    private Image image;    //???????????
 
     public Gontrand(Point2D position, Point2D velocite, Point2D acceleration, Point2D taille) {
         this.position = position;
@@ -155,7 +155,8 @@ public class Gontrand extends ObjetDuJeu {
 
 
         context.setFill(Color.WHITE);
-        context.fillRect(10, 10, 150, 35);
+        double largeurEnFctVie = vie * 37.5;
+        context.fillRect(10, 10, largeurEnFctVie, 35);
         context.drawImage(new Image("etoile.png"),  170, 12);
 
     }
@@ -177,10 +178,17 @@ public class Gontrand extends ObjetDuJeu {
        image = new  Image("gontrand-outch.png");
        tempsInvincible = 2;
     }
-    public void perduDroite() {}
+
+    public int getVie() {
+        return vie;
+    }
 
     public Image getImage() {
         return image;
+    }
+
+    public Point2D getCentre () {
+        return new Point2D(position.getX() + taille.getX()/2, position.getY() + taille.getY()/2);
     }
 
     //public void enCollision
