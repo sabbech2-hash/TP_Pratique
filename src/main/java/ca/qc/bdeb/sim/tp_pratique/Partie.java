@@ -150,6 +150,8 @@ public class Partie {
             poissonsEnnemi.get(i).update(deltaTemps);
         }
 
+        enleverObjetsHorsEcran();
+
         if (gontrand.getDroite() >= camera.getLargeurNiveau()) {
             nouveauNiveau();
         }
@@ -181,6 +183,22 @@ public class Partie {
 
         verifierEtatDePartie();
 
+    }
+
+    public void enleverObjetsHorsEcran() {
+        for (int i = poissonsEnnemi.size() - 1; i >= 0; i--) {
+            PoissonEnnemi poisson = poissonsEnnemi.get(i);
+            if (poisson.getDroite() < 0 || poisson.getBas() < 0 || poisson.getHaut() > HelloApplication.h) {
+                poissonsEnnemi.remove(poisson);
+            }
+        }
+
+        for (int i = projectiles.size() - 1; i >= 0; i--) {
+            Projectile projectile = projectiles.get(i);
+            if(projectile.getGauche() > HelloApplication.w || projectile.getDroite() < 0 || projectile.getBas() < 0 || projectile.getHaut() > HelloApplication.h) {
+                projectiles.remove(projectile);
+            }
+        }
     }
 
     private void clamp(ObjetDuJeu objetDuJeu) {
