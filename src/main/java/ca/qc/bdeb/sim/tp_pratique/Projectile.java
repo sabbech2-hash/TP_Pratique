@@ -14,6 +14,7 @@ public abstract class Projectile extends ObjetDuJeu {
     @Override
     protected void updatePhysique(double deltaTemps) {
         super.updatePhysique(deltaTemps);
+
     }
 
     @Override

@@ -174,6 +174,7 @@ public class Partie {
 
         if (gontrand.getDroite() >= camera.getLargeurNiveau()) {
             nouveauNiveau();
+            barilEstUtilise = false;
         }
 
         if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
