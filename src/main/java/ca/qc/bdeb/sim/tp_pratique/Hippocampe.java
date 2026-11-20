@@ -6,33 +6,45 @@ import javafx.scene.image.Image;
 
 import java.util.Random;
 
-public class Hippocambe extends Projectile {
+public class Hippocampe extends Projectile {
 
     Random rand = new Random();
     boolean estPositif = rand.nextBoolean();  // jsp si on peux mettre en variable de classe
 
-    public Hippocambe(Point2D centreGontrand) {
+    double amplitudeSinus = rand.nextDouble(30,60);
+    double tempsOscillation = rand.nextDouble(1,3);
 
+    private Point2D centreGontrand1;
 
-        image = new Image("hippocambe.png");
+    private double tempsDepuisCreationProjectile = 0;
+
+    public Hippocampe(Point2D centreGontrand) {
+
+        centreGontrand1 = centreGontrand;
+
+        image = new Image("hippocampe.png");
         taille = new Point2D(20, 36);
         velocite = new Point2D(500, 0);
-        position = new Point2D(centreGontrand.getX(), centreGontrand.getY());
+        position = new Point2D(centreGontrand1.getX(), centreGontrand1.getY());
+
+
+        if (!estPositif) {
+            amplitudeSinus = -amplitudeSinus;
+        }
+
         acceleration = new Point2D(0,0);  // obligatoire, encore une fois
 
     }
 
     @Override
     public void update(double deltaTemps) {
+
+        tempsDepuisCreationProjectile += deltaTemps;
+
         super.update(deltaTemps);
 
-        double amplitudeSinus = rand.nextDouble(30,60);
-        if (!estPositif) {
-            amplitudeSinus = -amplitudeSinus;
-        }
-
         // peut stocker gros calcul dans variable positionY
-      //  position = new Point2D(position.getX(),amplitudeSinus * Math.sin(2*Math.PI*Partie.getTempsDepuisCreationProjectile())/ rand.nextDouble(1,3) + centreGontrand.getY() );
+        position = new Point2D(position.getX(),amplitudeSinus * Math.sin((2*Math.PI*tempsDepuisCreationProjectile)/ (tempsOscillation)) + centreGontrand1.getY() );
     }
 
     @Override

@@ -159,7 +159,7 @@ public class Gontrand extends ObjetDuJeu {
         context.setFill(Color.WHITE);
         double largeurEnFctVie = vie * 37.5;
         context.fillRect(10, 10, largeurEnFctVie, 35);
-        context.drawImage(new Image("etoile.png"),  170, 12);
+        context.drawImage(new Image("etoile.png"),  170, 12);  // a changer en fonction du projectile actuel
 
     }
 
@@ -189,7 +189,7 @@ public class Gontrand extends ObjetDuJeu {
         return image;
     }
 
-    public Point2D getCentre () {
+    public  Point2D getCentre () {
         return new Point2D(position.getX() + taille.getX()/2, position.getY() + taille.getY()/2);
     }
 
