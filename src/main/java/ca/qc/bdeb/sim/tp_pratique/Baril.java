@@ -42,4 +42,8 @@ public class Baril extends ObjetDuJeu {
     public boolean verifierCollision(ObjetDuJeu autre) {
         return super.verifierCollision(autre);
     }
+
+    public void barilUtilise () {
+        image = new Image("baril-ouvert.png");
+    }
 }

@@ -258,9 +258,11 @@ public class HelloApplication extends Application {
 
                 if (premiere.verifierEtatDePartie()) {
 
-                    stop();
-                    stage.setScene(sceneAccueil());
+                    if (Partie.getTempsDepuisMortGontrand() > 3) {
+                        stop();
+                        stage.setScene(sceneAccueil());
 
+                    }
                 }
                 //premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
                 //premiere.collisionAvecPoissonsEnnemis();
