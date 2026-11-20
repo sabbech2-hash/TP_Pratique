@@ -24,6 +24,8 @@ public class Gontrand extends ObjetDuJeu {
 
     @Override
     public void update(double deltaTemps) {
+
+
         boolean estGauche = Input.isKeyPressed(KeyCode.LEFT);
         boolean estDroite = Input.isKeyPressed(KeyCode.RIGHT);
         boolean estHaut = Input.isKeyPressed(KeyCode.UP);
@@ -149,7 +151,7 @@ public class Gontrand extends ObjetDuJeu {
                     taille.getY());
         }
 
-        // barre de vie de Gontrand
+        // barre de vie de Gontrand  À DÉPLACER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         context.setStroke(Color.WHITE);
         context.strokeRect(10,10,150,35);
 

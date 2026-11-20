@@ -121,9 +121,7 @@ public class HelloApplication extends Application {
 
         //root.getChildren().addAll(canvas, optionsAccueil);
 
-
         return scene;
-
 
     }
 
@@ -255,18 +253,17 @@ public class HelloApplication extends Application {
                 double deltaTemps = (temps - dernierTemps)  * 1e-9;
 
 
-               context.fillRect(0, 0, w, h);
+                context.fillRect(0, 0, w, h);
 
-
-                //dessinerFondEcran(context, algues);
 
                 premiere.update(deltaTemps);
 
+                if (premiere.verifierEtatDePartie()) {
+                    stage.setScene(sceneAccueil());
 
+                }
                 premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
                 premiere.collisionAvecPoissonsEnnemis();
-
-
 
                 premiere.draw(context);
 

@@ -2,10 +2,8 @@ package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 
-public abstract class Projectiles extends ObjetDuJeu {
+public abstract class Projectile extends ObjetDuJeu {
 
 
     @Override

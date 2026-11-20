@@ -16,17 +16,19 @@ public class Partie {
 
     private boolean jeuTermine = false;
     public static Gontrand gontrand;
-    private ArrayList<PoissonsEnnemi> poissonsEnnemi;
-    private ArrayList<Projectiles> projectiles;
+    private ArrayList<PoissonEnnemi> poissonsEnnemi;
+    private ArrayList<Projectile> projectiles;
     private Baril baril;
     private Camera camera;
     private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
     private static double tempsDepuisDebutNiveau = 0;
     private double tempsEntreGroupePoissons;
     private double tempsDepuisDernierGroupePoissons;
-    private double tempsDepuisDernierTir;
+    private double tempsDepuisDernierTir;  // different de creation du projectile
+    private static double tempsDepuisCreationProjectile;
+    private double tempsDepuisMortGontrand;
     private static Color couleurFond;
-    private ArrayList<Algues> algues;
+    private ArrayList<Algue> algues;
     Random random = new Random();
 
 
@@ -53,7 +55,7 @@ public class Partie {
     }
 
     public void collisionGontrandEtPoissonsEnnemis () {
-        for (PoissonsEnnemi poisson : poissonsEnnemi) {
+        for (PoissonEnnemi poisson : poissonsEnnemi) {
             if (gontrand.verifierCollision(poisson) && !gontrand.estInvincible()) {
                 gontrand.perdreVie();
 
@@ -64,8 +66,8 @@ public class Partie {
 
 
     public void collisionAvecPoissonsEnnemis () {
-        for (PoissonsEnnemi poisson : poissonsEnnemi) {
-            for (Projectiles projectile : projectiles) {
+        for (PoissonEnnemi poisson : poissonsEnnemi) {
+            for (Projectile projectile : projectiles) {
                if (projectile.verifierCollision(poisson)) {
                    poissonsEnnemi.remove(poisson);  // vu qu'on le remove, il ne fait plus partie du ArrayList qu'on draw constamment = disparait
                }
@@ -84,6 +86,8 @@ public class Partie {
 
         dessinerFondEcran(context, algues);
 
+
+
         baril.draw(context, camera);
 
         if (jeuTermine) {
@@ -91,6 +95,9 @@ public class Partie {
             context.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
             context.setFill(Color.DARKRED);
             context.fillText("FIN DE PARTIE", (HelloApplication.w/2) - 180, (HelloApplication.h/2));
+
+
+
         }
 
         // ESSENTIEL: vu que c un pane root, on dessine dans le bon ordre, pas hasard
@@ -111,7 +118,7 @@ public class Partie {
 
         gontrand.draw(context, camera);
 
-        for (Projectiles projectile : projectiles) {
+        for (Projectile projectile : projectiles) {
             projectile.draw(context, camera);
         }
     }
@@ -119,7 +126,7 @@ public class Partie {
     public void update(double deltaTemps) {
 
         if (jeuTermine) {
-            //
+            tempsDepuisDernierGroupePoissons += deltaTemps;
         }
 
 
@@ -140,7 +147,7 @@ public class Partie {
         if (creerPoisson) {
             int nombreDePoissons = random.nextInt(1, 5);
             for (int i = 0; i < nombreDePoissons; i++) {
-                poissonsEnnemi.add(new PoissonsEnnemi(numeroDeNiveau, camera));   // on ajoute des poissons avec l initialisation
+                poissonsEnnemi.add(new PoissonEnnemi(numeroDeNiveau, camera));   // on ajoute des poissons avec l initialisation
             }
         }
         for (int i = 0; i < poissonsEnnemi.size(); i++) {
@@ -156,7 +163,7 @@ public class Partie {
             tempsDepuisDernierTir = 0;
         }
 
-        for (Projectiles projectile : projectiles) {
+        for (Projectile projectile : projectiles) {
             projectile.update(deltaTemps);
         }
 
@@ -201,7 +208,7 @@ public class Partie {
 
     }
 
-    private ArrayList<Algues> positionAlgues() {
+    private ArrayList<Algue> positionAlgues() {
 
 
         Image[] imagesDecor = {
@@ -217,42 +224,43 @@ public class Partie {
 
         int position = 0;
 
-        ArrayList<Algues> algues = new ArrayList();
+        ArrayList<Algue> algues = new ArrayList();
 
         while (position < HelloApplication.w * 8) {
-            algues.add(new Algues(position, imagesDecor[random.nextInt(imagesDecor.length)]));
+            algues.add(new Algue(position, imagesDecor[random.nextInt(imagesDecor.length)]));
             position += 80 + random.nextInt(50, 101);
         }
         return algues;
 
     }
 
-    public void verifierEtatDePartie() {
+    public boolean verifierEtatDePartie() {
         if (gontrand.getVie() == 0) {
             jeuTermine = true;
         }
+        return jeuTermine;
     }
 
 
-    private void dessinerFondEcran(GraphicsContext context, ArrayList<Algues> algues) {
+    private void dessinerFondEcran(GraphicsContext context, ArrayList<Algue> algues) {
 
         context.setFill(couleurFond);
         context.fillRect(0, 0, HelloApplication.w, HelloApplication.h);
 
-        for (Algues a : algues) {
+        for (Algue a : algues) {
             a.draw(context, camera);
         }
 
 
     }
 
-    public Point2D champElectrique(ArrayList<PoissonsEnnemi> poissons, Point2D point) {
+    public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
         Point2D champElectrique = new Point2D(0,0);
 
         double k = (9.0)*(10^9);
         double absQPoisson = 900; //car tous les poissons ennemis ont une charge de -900
 
-        for (PoissonsEnnemi poisson : poissons) {
+        for (PoissonEnnemi poisson : poissons) {
             Point2D posPoisson = poisson.getPosition();
             double distance = (posPoisson.distance(point));
             double angleChamp = (point.subtract(posPoisson)).angle(new Point2D(1,0));
@@ -265,7 +273,7 @@ public class Partie {
         return champElectrique;
     }
     
-    public Point2D forceElectrique(ArrayList<PoissonsEnnemi> poissons, Point2D point) {
+    public Point2D forceElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
         double qSardine = 900; //Car la charge d'une boite de sardine est toujours de 900 
         Point2D forceE = champElectrique(poissons, point).multiply(qSardine);
         
@@ -275,6 +283,10 @@ public class Partie {
 
     public static double getTempsDepuisDebutNiveau(){
         return tempsDepuisDebutNiveau;
+    }
+
+    public static double getTempsDepuisCreationProjectile(){
+        return tempsDepuisCreationProjectile;
     }
 
 }

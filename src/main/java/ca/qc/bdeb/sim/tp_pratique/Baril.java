@@ -23,6 +23,7 @@ public class Baril extends ObjetDuJeu {
     public void update(double deltaTemps) {
         super.update(deltaTemps);
 
+        // peut stocker gros calcul dans variable positionY...
         position = new Point2D(position.getX(), (HelloApplication.h - taille.getY())/2* Math.sin((2*Math.PI*Partie.getTempsDepuisDebutNiveau())/3) + (HelloApplication.h - taille.getY())/2);
 
     }

@@ -1,12 +1,11 @@
 package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class Algues extends ObjetDuJeu {
+public class Algue extends ObjetDuJeu {
 
-    public Algues(int position, Image image) {
+    public Algue(int position, Image image) {
         this.position = new Point2D(position, HelloApplication.h - 109);
         this.image = image;
         taille = new Point2D(80,119);

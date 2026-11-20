@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class EtoileDeMer extends Projectiles {
+public class EtoileDeMer extends Projectile {
 
     public EtoileDeMer(Point2D centreGonrtand) {
         position = new Point2D(centreGonrtand.getX(), centreGonrtand.getY());   // PAS TOTALEMENT centrer

@@ -1,12 +1,11 @@
 package ca.qc.bdeb.sim.tp_pratique;
 
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 import java.util.Random;
 
-public class PoissonsEnnemi extends ObjetDuJeu {
+public class PoissonEnnemi extends ObjetDuJeu {
 
     Random random = new Random();
     private Image [] imagesPoissons = {
@@ -19,7 +18,7 @@ public class PoissonsEnnemi extends ObjetDuJeu {
 
 
 
-    public PoissonsEnnemi(int niveau, Camera camera) {
+    public PoissonEnnemi(int niveau, Camera camera) {
 
         double positionYInitiale = random.nextDouble(0.2 * HelloApplication.h, 0.8 * HelloApplication.h);
 

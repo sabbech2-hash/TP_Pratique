@@ -6,14 +6,17 @@ import javafx.scene.image.Image;
 
 import java.util.Random;
 
-public class Hippopocambes extends Projectiles {
+public class Hippocambe extends Projectile {
 
     Random rand = new Random();
+    boolean estPositif = rand.nextBoolean();  // jsp si on peux mettre en variable de classe
 
-    public Hippopocambes (Point2D centreGontrand) {
-        image = new Image("hippopocambes.png");
+    public Hippocambe(Point2D centreGontrand) {
+
+
+        image = new Image("hippocambe.png");
         taille = new Point2D(20, 36);
-        velocite = new Point2D(500,0);
+        velocite = new Point2D(500, 0);
         position = new Point2D(centreGontrand.getX(), centreGontrand.getY());
         acceleration = new Point2D(0,0);  // obligatoire, encore une fois
 
@@ -23,8 +26,13 @@ public class Hippopocambes extends Projectiles {
     public void update(double deltaTemps) {
         super.update(deltaTemps);
 
-        velocite = new Point2D(velocite.getX(), rand.nextDouble(-30));
+        double amplitudeSinus = rand.nextDouble(30,60);
+        if (!estPositif) {
+            amplitudeSinus = -amplitudeSinus;
+        }
 
+        // peut stocker gros calcul dans variable positionY
+      //  position = new Point2D(position.getX(),amplitudeSinus * Math.sin(2*Math.PI*Partie.getTempsDepuisCreationProjectile())/ rand.nextDouble(1,3) + centreGontrand.getY() );
     }
 
     @Override
