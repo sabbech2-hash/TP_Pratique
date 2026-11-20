@@ -133,25 +133,8 @@ public class Partie {
 
         // À voir si on met ça dans Gontrand ou ici
 
-        // À voir si c'est du copié collé
-        boolean estClampX = Math.clamp(gontrand.position.getX(), camera.getPositionCamera().getX(), camera.getLargeurNiveau() - gontrand.getTaille().getX()) != gontrand.position.getX();
-        boolean estClampY = Math.clamp(gontrand.position.getY(), camera.getPositionCamera().getY(), camera.getLargeurNiveau() - gontrand.getTaille().getY()) != gontrand.position.getY();
-
-        if (estClampX)  gontrand.velocite = new Point2D(0, gontrand.velocite.getY());
-        if (estClampY)  gontrand.velocite = new Point2D(gontrand.velocite.getX(), 0);
-
-
-        gontrand.position = new Point2D(Math.clamp(
-                gontrand.position.getX(),
-                camera.getPositionCamera().getX(),
-                camera.getLargeurNiveau() - gontrand.getTaille().getX()
-        ),
-                Math.clamp(
-                        gontrand.position.getY(),
-                        0,
-                        HelloApplication.h - gontrand.getTaille().getY()
-                )
-        );
+        arreteSiClamp(gontrand);
+        clamp(gontrand);
 
         boolean creerPoisson = creerGroupeDePoissons(deltaTemps);
         if (creerPoisson) {
@@ -180,6 +163,28 @@ public class Partie {
 
         verifierEtatDePartie();
 
+    }
+
+    private void clamp(ObjetDuJeu objetDuJeu) {
+        objetDuJeu.position = new Point2D(Math.clamp(
+                objetDuJeu.position.getX(),
+                camera.getPositionCamera().getX(),
+                camera.getLargeurNiveau() - objetDuJeu.getTaille().getX()
+        ),
+                Math.clamp(
+                        objetDuJeu.position.getY(),
+                        0,
+                        HelloApplication.h - objetDuJeu.getTaille().getY()
+                )
+        );
+    }
+
+    private void arreteSiClamp(ObjetDuJeu objetDuJeu) {
+        boolean estClampX = Math.clamp(objetDuJeu.position.getX(), camera.getPositionCamera().getX(), camera.getLargeurNiveau() - gontrand.getTaille().getX()) != gontrand.position.getX();
+        boolean estClampY = Math.clamp(objetDuJeu.position.getY(), camera.getPositionCamera().getY(), camera.getLargeurNiveau() - gontrand.getTaille().getY()) != gontrand.position.getY();
+
+        if (estClampX)  objetDuJeu.velocite = new Point2D(0, objetDuJeu.velocite.getY());
+        if (estClampY)  objetDuJeu.velocite = new Point2D(objetDuJeu.velocite.getX(), 0);
     }
 
 
@@ -239,6 +244,32 @@ public class Partie {
         }
 
 
+    }
+
+    public Point2D champElectrique(ArrayList<PoissonsEnnemi> poissons, Point2D point) {
+        Point2D champElectrique = new Point2D(0,0);
+
+        double k = (9.0)*(10^9);
+        double absQPoisson = 900; //car tous les poissons ennemis ont une charge de -900
+
+        for (PoissonsEnnemi poisson : poissons) {
+            Point2D posPoisson = poisson.getPosition();
+            double distance = (posPoisson.distance(point));
+            double angleChamp = (point.subtract(posPoisson)).angle(new Point2D(1,0));
+            double moduleE = (k*absQPoisson)/Math.pow(distance, 2); 
+            champElectrique.add(new Point2D(
+                    moduleE*Math.cos(angleChamp),
+                    moduleE*Math.sin(angleChamp)));
+        }
+        
+        return champElectrique;
+    }
+    
+    public Point2D forceElectrique(ArrayList<PoissonsEnnemi> poissons, Point2D point) {
+        double qSardine = 900; //Car la charge d'une boite de sardine est toujours de 900 
+        Point2D forceE = champElectrique(poissons, point).multiply(qSardine);
+        
+        return forceE;
     }
 
 
