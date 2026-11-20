@@ -18,6 +18,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -259,6 +260,8 @@ public class HelloApplication extends Application {
                 premiere.update(deltaTemps);
 
                 if (premiere.verifierEtatDePartie()) {
+
+                    stop();
                     stage.setScene(sceneAccueil());
 
                 }

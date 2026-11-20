@@ -26,7 +26,6 @@ public class Partie {
     private double tempsDepuisDernierGroupePoissons;
     private double tempsDepuisDernierTir;  // different de creation du projectile
     private static double tempsDepuisCreationProjectile;
-    private double tempsDepuisMortGontrand;
     private static Color couleurFond;
     private ArrayList<Algue> algues;
     Random random = new Random();
@@ -89,16 +88,6 @@ public class Partie {
 
 
         baril.draw(context, camera);
-
-        if (jeuTermine) {
-
-            context.setFont(Font.font("Verdana", FontWeight.BOLD, 50));
-            context.setFill(Color.DARKRED);
-            context.fillText("FIN DE PARTIE", (HelloApplication.w/2) - 180, (HelloApplication.h/2));
-
-
-
-        }
 
         // ESSENTIEL: vu que c un pane root, on dessine dans le bon ordre, pas hasard
 
