@@ -186,16 +186,17 @@ public class Partie {
     }
 
     public void enleverObjetsHorsEcran() {
+        double cameraEnX = camera.getPositionCamera().getX();
         for (int i = poissonsEnnemi.size() - 1; i >= 0; i--) {
             PoissonEnnemi poisson = poissonsEnnemi.get(i);
-            if (poisson.getDroite() < 0 || poisson.getBas() < 0 || poisson.getHaut() > HelloApplication.h) {
+            if (poisson.getDroite() - cameraEnX < 0 || poisson.getBas() < 0 || poisson.getHaut() > HelloApplication.h) {
                 poissonsEnnemi.remove(poisson);
             }
         }
 
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
-            if(projectile.getGauche() > HelloApplication.w || projectile.getDroite() < 0 || projectile.getBas() < 0 || projectile.getHaut() > HelloApplication.h) {
+            if(projectile.getGauche() - cameraEnX > HelloApplication.w || projectile.getDroite() - cameraEnX < 0 || projectile.getBas() < 0 || projectile.getHaut() > HelloApplication.h) {
                 projectiles.remove(projectile);
             }
         }
