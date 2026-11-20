@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -18,6 +17,7 @@ public class Partie {
     public static Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonsEnnemi;
     private ArrayList<Projectile> projectiles;
+    private int numeroProjectileGontrand;
     private Baril baril;
     private Camera camera;
     private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
@@ -65,7 +65,8 @@ public class Partie {
 
 
     public void collisionAvecPoissonsEnnemis () {
-        for (PoissonEnnemi poisson : poissonsEnnemi) {
+        for (int i = poissonsEnnemi.size() -1; i >= 0; i--) {
+            PoissonEnnemi poisson = poissonsEnnemi.get(i);
             for (Projectile projectile : projectiles) {
                if (projectile.verifierCollision(poisson)) {
                    poissonsEnnemi.remove(poisson);  // vu qu'on le remove, il ne fait plus partie du ArrayList qu'on draw constamment = disparait
@@ -76,8 +77,13 @@ public class Partie {
     }
 
     public void collisionGontrandAvecBaril() {
+        int ancienProjectile = numeroProjectileGontrand;
         if (gontrand.verifierCollision(baril)) {
-            // generate un random projectiles parmi la liste de projectiles en haut
+            do {
+                numeroProjectileGontrand = random.nextInt(3);
+                System.out.println(numeroProjectileGontrand);
+            } while (numeroProjectileGontrand == ancienProjectile);
+            // generate un random projectiles parmi les projectiles que Gontrand n'a pas
         }
     }
 
@@ -127,8 +133,9 @@ public class Partie {
 
         baril.update(deltaTemps);
 
-        // À voir si on met ça dans Gontrand ou ici
+        collisionGontrandAvecBaril();
 
+        // À voir si on met ça dans Gontrand ou ici
         arreteSiClamp(gontrand);
         clamp(gontrand);
 
@@ -148,14 +155,29 @@ public class Partie {
         }
 
         if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
-            projectiles.add(new EtoileDeMer(gontrand.getCentre()));  // a changer 100%%%%%%%%%%
             tempsDepuisDernierTir = 0;
+            System.out.println(numeroProjectileGontrand);
+            if (numeroProjectileGontrand == 0) {
+                projectiles.add(new EtoileDeMer(gontrand.getCentre()));  // a changer 100%%%%%%%%%%
+            }/* else if (numeroProjectileGontrand == 1 ) {
+                projectiles.add(new TrioHippocampes());
+            }*/ else if (numeroProjectileGontrand == 2) {
+                projectiles.add(new BoiteSardine(gontrand.getCentre()));
+            }
         }
 
         for (Projectile projectile : projectiles) {
-            projectile.update(deltaTemps);
+            if (projectile instanceof EtoileDeMer || projectile instanceof TrioHippocampes) {
+                projectile.update(deltaTemps);
+            } else if (projectile instanceof BoiteSardine) {
+                projectile.acceleration = forceElectrique(poissonsEnnemi, projectile.getPosition());
+               // System.out.println(projectile.acceleration);
+                projectile.update(deltaTemps);
+            }
         }
 
+        collisionGontrandEtPoissonsEnnemis();
+        collisionAvecPoissonsEnnemis();
 
         verifierEtatDePartie();
 
@@ -193,6 +215,7 @@ public class Partie {
         couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
         poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
         projectiles = new ArrayList<>();
+        numeroProjectileGontrand = 2;
         baril = new  Baril();
 
     }
@@ -253,18 +276,22 @@ public class Partie {
             Point2D posPoisson = poisson.getPosition();
             double distance = (posPoisson.distance(point));
             double angleChamp = (point.subtract(posPoisson)).angle(new Point2D(1,0));
-            double moduleE = (k*absQPoisson)/Math.pow(distance, 2); 
-            champElectrique.add(new Point2D(
+            double moduleE = (k*absQPoisson)/Math.pow(distance, 2);
+
+            Point2D champAI = new Point2D(
                     moduleE*Math.cos(angleChamp),
-                    moduleE*Math.sin(angleChamp)));
+                    moduleE*Math.sin(angleChamp));
+
+            champElectrique = champElectrique.add(champAI);
         }
-        
+        System.out.println(champElectrique);
         return champElectrique;
     }
     
     public Point2D forceElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
         double qSardine = 900; //Car la charge d'une boite de sardine est toujours de 900 
         Point2D forceE = champElectrique(poissons, point).multiply(qSardine);
+        //System.out.println(forceE);
         
         return forceE;
     }

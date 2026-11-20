@@ -83,7 +83,7 @@ public class HelloApplication extends Application {
 
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-       // context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+        // context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
         context.setFill(Color.web("#2A7FFF"));
         context.fillRect(0, 0, w, h);
 
@@ -126,7 +126,7 @@ public class HelloApplication extends Application {
 
     }
 
-    private Scene sceneInfo () {
+    private Scene sceneInfo() {
 
         StackPane root = new StackPane();
 
@@ -136,14 +136,14 @@ public class HelloApplication extends Application {
 
         GraphicsContext context = canvas.getGraphicsContext2D();
 
-        context.setFill(Color.hsb(random.nextInt(190, 270) ,0.84, 1.00));
+        context.setFill(Color.hsb(random.nextInt(190, 270), 0.84, 1.00));
         context.fillRect(0, 0, w, h);
 
         Text titre = new Text("Gontrand le Flétand");
         titre.setFont(Font.font("Purisa", 50));
 
         Random random = new Random();
-        Image [] imagesPoissons = {
+        Image[] imagesPoissons = {
 
                 new Image("poisson1.png"),
                 new Image("poisson2.png"),
@@ -166,7 +166,7 @@ public class HelloApplication extends Application {
             text.setFont(Font.font("Verdana", 30));
         }
 
-        Text [] textesPetits = {
+        Text[] textesPetits = {
                 new Text("Par"),
                 new Text("et")
         };
@@ -196,7 +196,7 @@ public class HelloApplication extends Application {
         VBox nodesScenesInfos = new VBox();
         nodesScenesInfos.setAlignment(Pos.TOP_CENTER);
         nodesScenesInfos.setSpacing(25);
-        nodesScenesInfos.setPadding(new Insets(10,25,25,25));
+        nodesScenesInfos.setPadding(new Insets(10, 25, 25, 25));
         nodesScenesInfos.getChildren().addAll(titre, imgViewPoissonAleatoire,
                 parPlusNom, etPlusNom, texteExplicatif, btnRetour);
 
@@ -205,16 +205,12 @@ public class HelloApplication extends Application {
         });
 
         scene.setOnKeyPressed(e -> {
-            if  (e.getCode() == KeyCode.ESCAPE) {
+            if (e.getCode() == KeyCode.ESCAPE) {
                 stage.setScene(sceneAccueil());
             }
         });
 
         root.getChildren().addAll(canvas, nodesScenesInfos);
-
-
-
-
 
 
         return scene;
@@ -228,13 +224,13 @@ public class HelloApplication extends Application {
         Pane root = new Pane();
         Canvas canvas = new Canvas(w, h);
 
-        Scene  scene = new Scene(root, w, h);
+        Scene scene = new Scene(root, w, h);
 
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         root.getChildren().add(canvas);
 
-        scene.setOnKeyPressed((e)-> {
+        scene.setOnKeyPressed((e) -> {
             if (e.getCode() == KeyCode.ESCAPE) {
 
                 Platform.exit();
@@ -242,16 +238,17 @@ public class HelloApplication extends Application {
                 Input.setKeyPressed(e.getCode(), true);
             }
         });
-        scene.setOnKeyReleased((e)-> {
-            Input.setKeyPressed(e.getCode(),false);
+        scene.setOnKeyReleased((e) -> {
+            Input.setKeyPressed(e.getCode(), false);
         });
 
 
         AnimationTimer timer = new AnimationTimer() {
             private long dernierTemps = System.nanoTime();
+
             @Override
             public void handle(long temps) {
-                double deltaTemps = (temps - dernierTemps)  * 1e-9;
+                double deltaTemps = (temps - dernierTemps) * 1e-9;
 
 
                 context.fillRect(0, 0, w, h);
@@ -265,8 +262,8 @@ public class HelloApplication extends Application {
                     stage.setScene(sceneAccueil());
 
                 }
-                premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
-                premiere.collisionAvecPoissonsEnnemis();
+                //premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
+                //premiere.collisionAvecPoissonsEnnemis();
 
                 premiere.draw(context);
 
@@ -279,19 +276,15 @@ public class HelloApplication extends Application {
 
 
 
-
-
-
-
         return scene;
     }
 
-    public static final int  h = 520;
+    public static final int h = 520;
     public static final int w = 900;
     private static int numeroNiveau;
 
     @Override
-    public void start(Stage primaryStage)  {
+    public void start(Stage primaryStage) {
 
         this.stage = primaryStage;
         stage.setTitle("Gontrand le Flétan");
