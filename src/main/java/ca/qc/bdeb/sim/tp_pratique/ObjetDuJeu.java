@@ -81,6 +81,8 @@ public class ObjetDuJeu {
     }
 
     public Point2D getCentre() {
-        return new Point2D(0,0);
+        double enX = position.getX() + taille.getX()/2;
+        double enY = position.getY() + taille.getY()/2;
+        return new Point2D(enX , enY);
     }
 }

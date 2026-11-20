@@ -82,15 +82,14 @@ public class Partie {
         int ancienProjectile = numeroProjectileGontrand;
         if (gontrand.verifierCollision(baril)) {
 
-
             barilEstUtilise  = true;
+
             do {
                 numeroProjectileGontrand = random.nextInt(3);
-                System.out.println("Ancien" + ancienProjectile);
-                System.out.println("Actuel" + numeroProjectileGontrand);
-
             } while (numeroProjectileGontrand == ancienProjectile);
             // generate un random projectiles parmi les projectiles que Gontrand n'a pas
+            System.out.println("Ancien" + ancienProjectile);
+            System.out.println("Actuel" + numeroProjectileGontrand);
         }
     }
 
@@ -184,7 +183,11 @@ public class Partie {
             if (numeroProjectileGontrand == 0) {
                 projectiles.add(new EtoileDeMer(gontrand.getCentre()));  // a changer 100%%%%%%%%%%
             } else if (numeroProjectileGontrand == 1 ) {
-                projectiles.add(new Hippocampe(gontrand.getCentre()));
+                int i = 0;
+                while (i < 3){
+                    i++;
+                    projectiles.add(new Hippocampe(gontrand.getCentre()));
+                }
             }  else if (numeroProjectileGontrand == 2) {
                 projectiles.add(new BoiteSardine(gontrand.getCentre()));
             }
@@ -195,7 +198,7 @@ public class Partie {
                 projectile.update(deltaTemps);
             } else if (projectile instanceof BoiteSardine) {
                 projectile.acceleration = forceElectrique(poissonsEnnemi, projectile.getPosition());
-               // System.out.println(projectile.acceleration);
+                System.out.println(projectile.acceleration);
                 projectile.update(deltaTemps);
             }
         }
@@ -308,31 +311,36 @@ public class Partie {
     }
 
     public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
+
         Point2D champElectrique = new Point2D(0,0);
 
-        double k = (9.0)*(10^9);
+        double k = 9.0*Math.pow(10,9);
         double absQPoisson = 900; //car tous les poissons ennemis ont une charge de -900
 
         for (PoissonEnnemi poisson : poissons) {
+
             Point2D posPoisson = poisson.getPosition();
+
             double distance = (posPoisson.distance(point));
-            double angleChamp = (point.subtract(posPoisson)).angle(new Point2D(1,0));
-            double moduleE = (k*absQPoisson)/Math.pow(distance, 2);
+            distance = Math.max(distance, 1); // Limite la distance à au moins 1 pixel.
 
-            Point2D champAI = new Point2D(
-                    moduleE*Math.cos(angleChamp),
-                    moduleE*Math.sin(angleChamp));
+            Point2D direction = posPoisson.subtract(point).normalize();
 
-            champElectrique = champElectrique.add(champAI);
+            double moduleChampE = (k*absQPoisson)/Math.pow(distance, 2);
+
+            Point2D champUnPoisson = direction.multiply(moduleChampE);
+
+            champElectrique = champElectrique.add(champUnPoisson);
         }
-        System.out.println(champElectrique);
+
+
         return champElectrique;
     }
     
     public Point2D forceElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
-        double qSardine = 900; //Car la charge d'une boite de sardine est toujours de 900 
+        double qSardine = 900; //Car la charge d'une boite de sardine est toujours de 900
+
         Point2D forceE = champElectrique(poissons, point).multiply(qSardine);
-        //System.out.println(forceE);
         
         return forceE;
     }

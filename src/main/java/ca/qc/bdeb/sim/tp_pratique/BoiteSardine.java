@@ -18,7 +18,11 @@ public class BoiteSardine extends Projectile{
 
     @Override
     protected void updatePhysique(double deltaTemps) {
-        super.updatePhysique(deltaTemps);
+        velocite = velocite.add(acceleration.multiply(deltaTemps));
+        if (velocite.magnitude() > 400)
+            velocite = velocite.normalize().multiply((400));
+
+        position = position.add(velocite.multiply(deltaTemps));
     }
 
     @Override
