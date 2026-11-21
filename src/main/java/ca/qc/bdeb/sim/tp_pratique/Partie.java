@@ -15,6 +15,8 @@ public class Partie {
 
     private boolean jeuTermine = false;
     private boolean jeuEstEnPause = false;
+    private boolean modeDebogage = false;
+    private boolean tEtaitEnfonce = false;
     private boolean barilEstUtilise = false;
     public static Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonsEnnemi;
@@ -233,6 +235,7 @@ public class Partie {
         collisionAvecPoissonsEnnemis();
 
         verifierEtatDePartie();
+        modeDebogage();
 
     }
 
@@ -382,6 +385,40 @@ public class Partie {
         return forceE;
     }
 
+
+    public void modeDebogage () {
+
+        //Sauter un niveau
+
+        if (Input.isKeyPressed(KeyCode.T) && !tEtaitEnfonce) {
+            nouveauNiveau();
+        }
+        tEtaitEnfonce = Input.isKeyPressed(KeyCode.T);
+
+        //Redonner un maximum de vies à Gontrand
+
+        if (Input.isKeyPressed(KeyCode.R)) {
+            gontrand.setVie(4);
+        }
+
+        //Donner les sardines comme projectile
+
+        if  (Input.isKeyPressed(KeyCode.E)) {
+            numeroProjectileGontrand = 2;
+        }
+
+        //Donner les hippocampes comme projectile
+
+        if (Input.isKeyPressed(KeyCode.W)) {
+            numeroProjectileGontrand = 1;
+        }
+
+        //Donner l'étoile de mer comme projectile
+
+        if (Input.isKeyPressed(KeyCode.Q)) {
+            numeroProjectileGontrand = 0;
+        }
+    }
 
     public static double getTempsDepuisDebutNiveau(){
         return tempsDepuisDebutNiveau;

@@ -185,6 +185,10 @@ public class Gontrand extends ObjetDuJeu {
         return vie;
     }
 
+    public static void setVie(int vie) {
+        Gontrand.vie = vie;
+    }
+
     public Image getImage() {
         return image;
     }
