@@ -14,11 +14,13 @@ public class Partie {
 
 
     private boolean jeuTermine = false;
+    private boolean jeuEstEnPause = false;
     private boolean barilEstUtilise = false;
     public static Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonsEnnemi;
     private ArrayList<Projectile> projectiles;
-    private int numeroProjectileGontrand;
+    private static Image imageProjectileActuel;
+    private int numeroProjectileGontrand = 0;
     private Baril baril;
     private Camera camera;
     private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
@@ -64,7 +66,6 @@ public class Partie {
 
    }
 
-
     public void collisionAvecPoissonsEnnemis () {
         for (int i = poissonsEnnemi.size() -1; i >= 0; i--) {
             PoissonEnnemi poisson = poissonsEnnemi.get(i);
@@ -79,6 +80,7 @@ public class Partie {
 
     public void collisionGontrandAvecBaril() {
 
+
         int ancienProjectile = numeroProjectileGontrand;
         if (gontrand.verifierCollision(baril)) {
 
@@ -86,10 +88,9 @@ public class Partie {
 
             do {
                 numeroProjectileGontrand = random.nextInt(3);
+
             } while (numeroProjectileGontrand == ancienProjectile);
             // generate un random projectiles parmi les projectiles que Gontrand n'a pas
-            System.out.println("Ancien" + ancienProjectile);
-            System.out.println("Actuel" + numeroProjectileGontrand);
         }
     }
 
@@ -130,12 +131,36 @@ public class Partie {
             context.fillText("FIN DE PARTIE", HelloApplication.w/2 - 150, (HelloApplication.h)/2);
         }
 
+        if (jeuEstEnPause) {
+            context.setFill(Color.BLACK);
+            context.setFont(Font.font("BOLD", 50));
+            context.fillText("PAUSE", HelloApplication.w/2 - 50, (HelloApplication.h)/2);
+        }
+
     }
 
     public void update(double deltaTemps) {
 
         if (jeuTermine) {
             tempsDepuisMortGontrand += deltaTemps;
+        }
+
+        if (jeuEstEnPause) {
+            return;   // ca arrete pas le temps, c ca la confusion A VOIR
+        }
+
+        switch (numeroProjectileGontrand)
+        {
+            case 0:
+                imageProjectileActuel = new Image("etoile.png");
+                break;
+
+            case 1:
+                imageProjectileActuel = new Image("hippocampe.png");
+                break;
+
+            default:
+                imageProjectileActuel = new Image("sardines.png");
         }
 
 
@@ -255,6 +280,7 @@ public class Partie {
         gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
         camera = new Camera();
         tempsDepuisDebutNiveau = 0;
+        tempsDepuisMortGontrand = 0;
         numeroDeNiveau++;
         algues = positionAlgues();
         couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
@@ -290,6 +316,16 @@ public class Partie {
         return algues;
 
     }
+
+    public boolean changerEtatPause() {
+        jeuEstEnPause = !jeuEstEnPause;
+        return jeuEstEnPause;
+    }
+
+    public boolean partieEstEnPause() {
+        return jeuEstEnPause;
+    }
+
 
     public boolean verifierEtatDePartie() {
         if (gontrand.getVie() == 0) {
@@ -353,5 +389,9 @@ public class Partie {
 
     public static double getTempsDepuisMortGontrand(){
         return tempsDepuisMortGontrand;
+    }
+
+    public static Image getImageProjectileActuel() {
+        return imageProjectileActuel;
     }
 }

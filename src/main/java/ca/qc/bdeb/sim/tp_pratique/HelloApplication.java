@@ -18,12 +18,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-
-import java.util.ArrayList;
 import java.util.Random;
 
 public class HelloApplication extends Application {
@@ -231,17 +227,21 @@ public class HelloApplication extends Application {
 
         root.getChildren().add(canvas);
 
-        scene.setOnKeyPressed((e) -> {
+        scene.setOnKeyPressed(e -> {
             if (e.getCode() == KeyCode.ESCAPE) {
-
                 Platform.exit();
+            } else if (e.getCode() == KeyCode.P) {
+                premiere.changerEtatPause();
             } else {
                 Input.setKeyPressed(e.getCode(), true);
             }
         });
-        scene.setOnKeyReleased((e) -> {
+
+        scene.setOnKeyReleased(e -> {
             Input.setKeyPressed(e.getCode(), false);
         });
+
+
 
 
         AnimationTimer timer = new AnimationTimer() {
@@ -251,27 +251,27 @@ public class HelloApplication extends Application {
             public void handle(long temps) {
                 double deltaTemps = (temps - dernierTemps) * 1e-9;
 
-
                 context.fillRect(0, 0, w, h);
 
+                if (!premiere.partieEstEnPause()) {
 
-                premiere.update(deltaTemps);
+                    premiere.update(deltaTemps);
 
-                if (premiere.verifierEtatDePartie()) {
+                    if (premiere.verifierEtatDePartie()) {
 
-                    if (Partie.getTempsDepuisMortGontrand() > 3) {
-                        stop();
-                        stage.setScene(sceneAccueil());
+                        if (Partie.getTempsDepuisMortGontrand() > 3) {
+                            stop();
+                            stage.setScene(sceneAccueil());
+
+                        }
+                    }
 
                     }
-                }
-                //premiere.collisionGontrandEtPoissonsEnnemis();  // je pense pas c la meilleur idee
-                //premiere.collisionAvecPoissonsEnnemis();
 
-                premiere.draw(context);
+                    premiere.draw(context);
 
+                    dernierTemps = temps;
 
-                dernierTemps = temps;
             }
         };
         timer.start();
@@ -284,7 +284,6 @@ public class HelloApplication extends Application {
 
     public static final int h = 520;
     public static final int w = 900;
-    private static int numeroNiveau;
 
     @Override
     public void start(Stage primaryStage) {
