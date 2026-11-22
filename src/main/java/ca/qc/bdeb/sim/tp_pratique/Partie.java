@@ -20,9 +20,11 @@ public class Partie {
     private boolean dEtaitEnfonce = false;
     private boolean tEtaitEnfonce = false;
     private boolean barilEstUtilise = false;
+    private boolean mannaEstUtilise = false;
     public static Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonsEnnemi;
     private ArrayList<Projectile> projectiles;
+    private Manna manna;
     private static Image imageProjectileActuel;
     private int numeroProjectileGontrand = 0;
     private Baril baril;
@@ -88,7 +90,7 @@ public class Partie {
         int ancienProjectile = numeroProjectileGontrand;
         if (gontrand.verifierCollision(baril)) {
 
-            barilEstUtilise  = true;
+            barilEstUtilise = true;
 
             do {
                 numeroProjectileGontrand = random.nextInt(3);
@@ -98,6 +100,14 @@ public class Partie {
         }
     }
 
+    public void collisionGontrandEtManna() {
+        if (gontrand.verifierCollision(manna)) {
+            Gontrand.setVie(gontrand.getVie()+1);   // faut mettre une limite a 4 vies sinon ca s eternalise
+           mannaEstUtilise = true;
+        }
+
+    }
+
     public void draw(GraphicsContext context) {
 
         dessinerFondEcran(context, algues);
@@ -105,6 +115,7 @@ public class Partie {
 
 
         baril.draw(context, camera);
+        manna.draw(context, camera);
 
         // ESSENTIEL: vu que c un pane root, on dessine dans le bon ordre, pas hasard
 
@@ -187,6 +198,15 @@ public class Partie {
             collisionGontrandAvecBaril();
         }
 
+        if (mannaEstUtilise) {
+            manna.mannaUtilise();
+        } else {
+            collisionGontrandEtManna();
+        }
+
+
+
+
 
         // À voir si on met ça dans Gontrand ou ici
         arreteSiClamp(gontrand);
@@ -208,6 +228,7 @@ public class Partie {
         if (gontrand.getDroite() >= camera.getLargeurNiveau()) {
             nouveauNiveau();
             barilEstUtilise = false;
+            mannaEstUtilise = false;
         }
 
         if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
@@ -237,8 +258,11 @@ public class Partie {
             }
         }
 
+        manna.update(deltaTemps);
+
         collisionGontrandEtPoissonsEnnemis();
         collisionAvecPoissonsEnnemis();
+
 
         verifierEtatDePartie();
         modeDebogage();
@@ -295,7 +319,7 @@ public class Partie {
         couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
         poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
         projectiles = new ArrayList<>();
-        numeroProjectileGontrand = numeroProjectileGontrand;
+        manna = new Manna();
         baril = new  Baril();
 
     }

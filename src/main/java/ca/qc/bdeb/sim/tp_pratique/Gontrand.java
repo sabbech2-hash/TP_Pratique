@@ -186,7 +186,12 @@ public class Gontrand extends ObjetDuJeu {
     }
 
     public static void setVie(int vie) {
-        Gontrand.vie = vie;
+        if (vie < 4) {
+            Gontrand.vie = vie;
+        } else {
+            Gontrand.vie = 4;
+        }
+
     }
 
     public Image getImage() {
@@ -200,51 +205,4 @@ public class Gontrand extends ObjetDuJeu {
     public double getPositionX () {
         return position.getX();
     }
-
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-   /* public void update(double deltaTemps) {
-
-
-        // Si un flocon sort de l'écran
-        if (horsDeLEcran()) {
-            collisionAvecSol();
-        }
-    }
-
-    protected void collisionAvecSol() {
-        recommencer();
-    }
-
-    private boolean horsDeLEcran() {
-        return position.getY() + taille.getY() > MainJavaFX.HEIGHT;
-    }
-
-    public void recommencer() {
-        // Déplace les flocons vers le haut
-        position = new Point2D(Math.random() * MainJavaFX.WIDTH, -Math.random() * 30);
-        velocite = VELOCITE_INITIALE.add(new Point2D(Math.random() * 50 - 25, 0));
-    }
-
-    public void draw(GraphicsContext context) {
-        context.setFill(color);
-        context.fillRect(
-                position.getX(),
-                position.getY(),
-                taille.getX(),
-                taille.getY());
-    }
-}*/
