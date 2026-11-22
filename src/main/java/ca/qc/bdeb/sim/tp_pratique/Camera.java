@@ -10,9 +10,9 @@ public class Camera {
 
     public Camera(){
         positionCamera = new Point2D(0,0);
-        limiteMax = (double) HelloApplication.w / 5;
+        limiteMax = (double) MainJavaFX.w / 5;
         limiteMin = 0.0;
-        largeurNiveau = HelloApplication.w * 8;
+        largeurNiveau = MainJavaFX.w * 8;
     }
 
     public Point2D coordoEcran(Point2D positionMonde) {
@@ -27,7 +27,7 @@ public class Camera {
 
         // La caméra ne peut jamais reculer
         // et ne peut jamais dépasser la fin du niveau (8*w)
-        positionCamera = new Point2D(Math.max(limiteMin, Math.min(positionCamera.getX(), largeurNiveau - HelloApplication.w)), positionCamera.getY());
+        positionCamera = new Point2D(Math.max(limiteMin, Math.min(positionCamera.getX(), largeurNiveau - MainJavaFX.w)), positionCamera.getY());
 
     }
 

@@ -22,7 +22,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.util.Random;
 
-public class HelloApplication extends Application {
+public class MainJavaFX extends Application {
 
     private Stage stage;
     Random random = new Random();
@@ -253,11 +253,11 @@ public class HelloApplication extends Application {
 
                 context.fillRect(0, 0, w, h);
 
-                if (!premiere.partieEstEnPause()) {
+                if (!premiere.partieEstEnPause()) {   // meme chose ici
 
                     premiere.update(deltaTemps);
 
-                    if (premiere.verifierEtatDePartie()) {
+                    if (premiere.verifierEtatDePartie()) {    // vu que c de la logique, je pense pas que ca devrait etre la
 
                         if (Partie.getTempsDepuisMortGontrand() > 3) {
                             stop();

@@ -9,7 +9,7 @@ import java.util.Random;
 public class Baril extends ObjetDuJeu {
 
     Random rand = new Random();
-    double largeurNiveau = HelloApplication.w * 8; //jsp si on peut faire cela (variable de classe)
+    double largeurNiveau = MainJavaFX.w * 8; //jsp si on peut faire cela (variable de classe)
 
     public Baril() {
         image = new Image("baril.png");
@@ -24,7 +24,7 @@ public class Baril extends ObjetDuJeu {
         super.update(deltaTemps);
 
         // peut stocker gros calcul dans variable positionY...
-        position = new Point2D(position.getX(), (HelloApplication.h - taille.getY())/2* Math.sin((2*Math.PI*Partie.getTempsDepuisDebutNiveau())/3) + (HelloApplication.h - taille.getY())/2);
+        position = new Point2D(position.getX(), (MainJavaFX.h - taille.getY())/2* Math.sin((2*Math.PI*Partie.getTempsDepuisDebutNiveau())/3) + (MainJavaFX.h - taille.getY())/2);
 
     }
 

@@ -20,9 +20,9 @@ public class PoissonEnnemi extends ObjetDuJeu {
 
     public PoissonEnnemi(int niveau, Camera camera) {
 
-        double positionYInitiale = random.nextDouble(0.2 * HelloApplication.h, 0.8 * HelloApplication.h);
+        double positionYInitiale = random.nextDouble(0.2 * MainJavaFX.h, 0.8 * MainJavaFX.h);
 
-        position = new Point2D(HelloApplication.w + camera.getPositionCamera().getX(), positionYInitiale);// techniquement pas besoin de this.
+        position = new Point2D(MainJavaFX.w + camera.getPositionCamera().getX(), positionYInitiale);// techniquement pas besoin de this.
 
         double velociteXInitiale = -(100 * Math.pow(niveau, 0.33) + 200);
         double velociteYInitiale = random.nextDouble(-100,100);

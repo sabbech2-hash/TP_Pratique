@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,6 +17,7 @@ public class Partie {
     private boolean jeuTermine = false;
     private boolean jeuEstEnPause = false;
     private boolean modeDebogage = false;
+    private boolean dEtaitEnfonce = false;
     private boolean tEtaitEnfonce = false;
     private boolean barilEstUtilise = false;
     public static Gontrand gontrand;
@@ -109,7 +111,7 @@ public class Partie {
         if (tempsDepuisDebutNiveau < 4) {
             context.setFont(Font.font("Purisa", 50));
             context.setFill(Color.BLACK);
-            context.fillText("NIVEAU " + numeroDeNiveau, (HelloApplication.w)/2 - 100, (HelloApplication.h)/2);
+            context.fillText("NIVEAU " + numeroDeNiveau, (MainJavaFX.w)/2 - 100, (MainJavaFX.h)/2);
         }
 
 
@@ -130,13 +132,17 @@ public class Partie {
 
             context.setFont(Font.font("BOLD", 50));
             context.setFill(Color.DARKRED);
-            context.fillText("FIN DE PARTIE", HelloApplication.w/2 - 150, (HelloApplication.h)/2);
+            context.fillText("FIN DE PARTIE", MainJavaFX.w/2 - 150, (MainJavaFX.h)/2);
         }
 
         if (jeuEstEnPause) {
             context.setFill(Color.BLACK);
             context.setFont(Font.font("BOLD", 50));
-            context.fillText("PAUSE", HelloApplication.w/2 - 50, (HelloApplication.h)/2);
+            context.fillText("PAUSE", MainJavaFX.w/2 - 50, (MainJavaFX.h)/2);
+        }
+
+        if (modeDebogage) {
+            dessinerDebogage(context);
         }
 
     }
@@ -243,14 +249,14 @@ public class Partie {
         double cameraEnX = camera.getPositionCamera().getX();
         for (int i = poissonsEnnemi.size() - 1; i >= 0; i--) {
             PoissonEnnemi poisson = poissonsEnnemi.get(i);
-            if (poisson.getDroite() - cameraEnX < 0 || poisson.getBas() < 0 || poisson.getHaut() > HelloApplication.h) {
+            if (poisson.getDroite() - cameraEnX < 0 || poisson.getBas() < 0 || poisson.getHaut() > MainJavaFX.h) {
                 poissonsEnnemi.remove(poisson);
             }
         }
 
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
-            if(projectile.getGauche() - cameraEnX > HelloApplication.w || projectile.getDroite() - cameraEnX < 0 || projectile.getBas() < 0 || projectile.getHaut() > HelloApplication.h) {
+            if(projectile.getGauche() - cameraEnX > MainJavaFX.w || projectile.getDroite() - cameraEnX < 0 || projectile.getBas() < 0 || projectile.getHaut() > MainJavaFX.h) {
                 projectiles.remove(projectile);
             }
         }
@@ -265,7 +271,7 @@ public class Partie {
                 Math.clamp(
                         objetDuJeu.position.getY(),
                         0,
-                        HelloApplication.h - objetDuJeu.getTaille().getY()
+                        MainJavaFX.h - objetDuJeu.getTaille().getY()
                 )
         );
     }
@@ -312,7 +318,7 @@ public class Partie {
 
         ArrayList<Algue> algues = new ArrayList();
 
-        while (position < HelloApplication.w * 8) {
+        while (position < MainJavaFX.w * 8) {
             algues.add(new Algue(position, imagesDecor[random.nextInt(imagesDecor.length)]));
             position += 80 + random.nextInt(50, 101);
         }
@@ -341,7 +347,7 @@ public class Partie {
     private void dessinerFondEcran(GraphicsContext context, ArrayList<Algue> algues) {
 
         context.setFill(couleurFond);
-        context.fillRect(0, 0, HelloApplication.w, HelloApplication.h);
+        context.fillRect(0, 0, MainJavaFX.w, MainJavaFX.h);
 
         for (Algue a : algues) {
             a.draw(context, camera);
@@ -418,6 +424,21 @@ public class Partie {
         if (Input.isKeyPressed(KeyCode.Q)) {
             numeroProjectileGontrand = 0;
         }
+
+        if (Input.isKeyPressed(KeyCode.D) && !dEtaitEnfonce) {
+            modeDebogage = !modeDebogage;
+
+        }
+        dEtaitEnfonce = Input.isKeyPressed(KeyCode.D);
+    }
+
+    public void dessinerDebogage(GraphicsContext context) {
+        context.setFill(Color.WHITE);
+        context.setFont(Font.font("Arial", 12));
+        context.fillText("NB Poissons: " + poissonsEnnemi.size(), 10,60);
+        context.fillText("NB Projectiles: " + projectiles.size(), 10,75);
+        context.fillText("Position Gontrand: " + ((gontrand.getPositionX() / (MainJavaFX.w * 8)) * 100) + "%",10, 90) ;
+
     }
 
     public static double getTempsDepuisDebutNiveau(){

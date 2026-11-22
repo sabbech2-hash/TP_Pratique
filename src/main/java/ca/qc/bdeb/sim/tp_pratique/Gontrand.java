@@ -197,7 +197,9 @@ public class Gontrand extends ObjetDuJeu {
         return new Point2D(position.getX() + taille.getX()/2, position.getY() + taille.getY()/2);
     }
 
-    //public void enCollision
+    public double getPositionX () {
+        return position.getX();
+    }
 
 
 

@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 public class Algue extends ObjetDuJeu {
 
     public Algue(int position, Image image) {
-        this.position = new Point2D(position, HelloApplication.h - 109);
+        this.position = new Point2D(position, MainJavaFX.h - 109);
         this.image = image;
         taille = new Point2D(80,119);
     }
