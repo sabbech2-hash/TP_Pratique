@@ -216,7 +216,7 @@ public class MainJavaFX extends Application {
     private Scene sceneJeu() {
 
 
-        Partie premiere = new Partie();
+        Partie partie = new Partie();
 
         Pane root = new Pane();
         Canvas canvas = new Canvas(w, h);
@@ -231,7 +231,7 @@ public class MainJavaFX extends Application {
             if (e.getCode() == KeyCode.ESCAPE) {
                 Platform.exit();
             } else if (e.getCode() == KeyCode.P) {
-                premiere.changerEtatPause();
+                partie.changerEtatPause();
             } else {
                 Input.setKeyPressed(e.getCode(), true);
             }
@@ -253,11 +253,11 @@ public class MainJavaFX extends Application {
 
                 context.fillRect(0, 0, w, h);
 
-                if (!premiere.partieEstEnPause()) {   // meme chose ici
+                if (!partie.partieEstEnPause()) {   // meme chose ici
 
-                    premiere.update(deltaTemps);
+                    partie.update(deltaTemps);
 
-                    if (premiere.verifierEtatDePartie()) {    // vu que c de la logique, je pense pas que ca devrait etre la
+                    if (partie.verifierEtatDePartie()) {    // vu que c de la logique, je pense pas que ca devrait etre la
 
                         if (Partie.getTempsDepuisMortGontrand() > 3) {
                             stop();
@@ -268,7 +268,7 @@ public class MainJavaFX extends Application {
 
                     }
 
-                    premiere.draw(context);
+                    partie.draw(context);
 
                     dernierTemps = temps;
 

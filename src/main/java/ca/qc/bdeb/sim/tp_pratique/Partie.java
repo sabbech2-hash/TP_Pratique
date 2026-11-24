@@ -14,24 +14,24 @@ import java.util.Random;
 public class Partie {
 
 
-    private boolean jeuTermine = false;
-    private boolean jeuEstEnPause = false;
-    private boolean modeDebogage = false;
-    private boolean dEtaitEnfonce = false;
-    private boolean tEtaitEnfonce = false;
-    private boolean barilEstUtilise = false;
-    private boolean mannaEstUtilise = false;
+    private boolean jeuTermine;
+    private boolean jeuEstEnPause;
+    private boolean modeDebogage;
+    private boolean dEtaitEnfonce;
+    private boolean tEtaitEnfonce;
+    private boolean barilEstUtilise;
+    private boolean mannaEstUtilise;
     public static Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonsEnnemi;
     private ArrayList<Projectile> projectiles;
     private Manna manna;
     private static Image imageProjectileActuel;
-    private int numeroProjectileGontrand = 0;
+    private int numeroProjectileGontrand;
     private Baril baril;
     private Camera camera;
-    private int numeroDeNiveau = 0;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
-    private static double tempsDepuisDebutNiveau = 0;
-    private static double tempsDepuisMortGontrand = 0;
+    private int numeroDeNiveau;  // a changer, c est pas 1, juste pour tester (on le fait pas dans scene de Jeu, car sceneJeu est appeler une seule fois
+    private static double tempsDepuisDebutNiveau;
+    private static double tempsDepuisMortGontrand;
     private double tempsEntreGroupePoissons;
     private double tempsDepuisDernierGroupePoissons;
     private double tempsDepuisDernierTir;  // different de creation du projectile
@@ -47,6 +47,14 @@ public class Partie {
         //algues = positionAlgues();
         //couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
         nouveauNiveau();
+        jeuTermine = false;
+        jeuEstEnPause = false;
+        modeDebogage = false;
+        dEtaitEnfonce = false;
+        tEtaitEnfonce = false;
+        barilEstUtilise = false;
+        mannaEstUtilise = false;
+
     }
 
     public boolean creerGroupeDePoissons(double deltaTemps) {
@@ -155,6 +163,8 @@ public class Partie {
         if (modeDebogage) {
             dessinerDebogage(context);
         }
+
+        gontrand.drawBarreDeVie(context);
 
     }
 

@@ -8,11 +8,9 @@ import javafx.scene.paint.Color;
 
 public class Gontrand extends ObjetDuJeu {
 
-    private static int vie = 4;   // nombre de vie de Gontrand n'est pas attribut de classe
-    private double tempsInvincible = 0;
-    private double tempsDepuisCollision = 0;
-
-    private Image image;    //???????????
+    private static int vie;   // nombre de vie de Gontrand n'est pas attribut de classe
+    private double tempsInvincible;
+    private double tempsDepuisCollision;
 
     public Gontrand(Point2D position, Point2D velocite, Point2D acceleration, Point2D taille) {
         this.position = position;
@@ -20,6 +18,9 @@ public class Gontrand extends ObjetDuJeu {
         this.acceleration = acceleration;
         this.taille = taille;
         this.image = new Image("gontrand.png");
+        vie = 4;
+        tempsInvincible = 0;
+        tempsDepuisCollision = 0;
     }
 
     @Override
@@ -151,16 +152,24 @@ public class Gontrand extends ObjetDuJeu {
                     taille.getY());
         }
 
-        // barre de vie de Gontrand  À DÉPLACER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        context.setStroke(Color.WHITE);
-        context.strokeRect(10,10,150,35);
+        /*
+        drawBarreDeVie(context);
 
 
         context.setFill(Color.WHITE);
         double largeurEnFctVie = vie * 37.5;
         context.fillRect(10, 10, largeurEnFctVie, 35);
         context.drawImage(Partie.getImageProjectileActuel(),  170, 10);  // a changer en fonction du projectile actuel
+*/
+    }
 
+    public static void drawBarreDeVie(GraphicsContext context) {
+        context.setStroke(Color.WHITE);
+        context.strokeRect(10,10,150,35);
+        context.setFill(Color.WHITE);
+        double largeurEnFctVie = vie * 37.5;
+        context.fillRect(10, 10, largeurEnFctVie, 35);
+        context.drawImage(Partie.getImageProjectileActuel(),  170, 10);
     }
 
 
