@@ -20,6 +20,7 @@ public class Partie {
     private boolean dEtaitEnfonce;
     private boolean tEtaitEnfonce;
     private boolean fEtaitEnfonce;
+    private boolean debugChampElectrique;
     private boolean barilEstUtilise;
     private boolean mannaEstUtilise;
     public static Gontrand gontrand;
@@ -53,6 +54,7 @@ public class Partie {
         dEtaitEnfonce = false;
         tEtaitEnfonce = false;
         fEtaitEnfonce = false;
+        debugChampElectrique = false;
         barilEstUtilise = false;
         mannaEstUtilise = false;
         gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
@@ -166,7 +168,16 @@ public class Partie {
             dessinerDebogage(context);
         }
 
-        if (Input.isKeyPressed(KeyCode.F) && !fEtaitEnfonce) {
+        if (debugChampElectrique) {
+            debugChampElectrique(context);
+        }
+        fEtaitEnfonce = Input.isKeyPressed(KeyCode.F);
+
+        gontrand.drawBarreDeVie(context);
+
+    }
+
+    private void debugChampElectrique(GraphicsContext context) {
             for (double x = 0; x < MainJavaFX.w; x += 50) {
                 for (double y = 0; y < MainJavaFX.h; y += 50) {
                     var positionMonde = new Point2D(x, y);
@@ -177,10 +188,6 @@ public class Partie {
                     UtilitairesDessins.dessinerVecteurForce(positionMonde, force, context);
                 }
             }
-        }
-
-        gontrand.drawBarreDeVie(context);
-
     }
 
     public void update(double deltaTemps) {
@@ -287,6 +294,11 @@ public class Partie {
 
         verifierEtatDePartie();
         modeDebogage();
+
+        if (Input.isKeyPressed(KeyCode.F) && !fEtaitEnfonce) {
+            debugChampElectrique = !debugChampElectrique;
+        }
+        fEtaitEnfonce = Input.isKeyPressed(KeyCode.F);
 
     }
 
