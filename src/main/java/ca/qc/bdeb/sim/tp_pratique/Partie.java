@@ -19,6 +19,7 @@ public class Partie {
     private boolean modeDebogage;
     private boolean dEtaitEnfonce;
     private boolean tEtaitEnfonce;
+    private boolean fEtaitEnfonce;
     private boolean barilEstUtilise;
     private boolean mannaEstUtilise;
     public static Gontrand gontrand;
@@ -51,6 +52,7 @@ public class Partie {
         modeDebogage = false;
         dEtaitEnfonce = false;
         tEtaitEnfonce = false;
+        fEtaitEnfonce = false;
         barilEstUtilise = false;
         mannaEstUtilise = false;
         gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
@@ -71,23 +73,23 @@ public class Partie {
         return false;
     }
 
-    public void collisionGontrandEtPoissonsEnnemis () {
+    public void collisionGontrandEtPoissonsEnnemis() {
         for (PoissonEnnemi poisson : poissonsEnnemi) {
             if (gontrand.verifierCollision(poisson) && !gontrand.estInvincible()) {
                 gontrand.perdreVie();
 
-           }
+            }
         }
 
-   }
+    }
 
-    public void collisionAvecPoissonsEnnemis () {
-        for (int i = poissonsEnnemi.size() -1; i >= 0; i--) {
+    public void collisionAvecPoissonsEnnemis() {
+        for (int i = poissonsEnnemi.size() - 1; i >= 0; i--) {
             PoissonEnnemi poisson = poissonsEnnemi.get(i);
             for (Projectile projectile : projectiles) {
-               if (projectile.verifierCollision(poisson)) {
-                   poissonsEnnemi.remove(poisson);  // vu qu'on le remove, il ne fait plus partie du ArrayList qu'on draw constamment = disparait
-               }
+                if (projectile.verifierCollision(poisson)) {
+                    poissonsEnnemi.remove(poisson);  // vu qu'on le remove, il ne fait plus partie du ArrayList qu'on draw constamment = disparait
+                }
             }
         }
 
@@ -111,8 +113,8 @@ public class Partie {
 
     public void collisionGontrandEtManna() {
         if (gontrand.verifierCollision(manna)) {
-            Gontrand.setVie(gontrand.getVie()+1);   // faut mettre une limite a 4 vies sinon ca s eternalise
-           mannaEstUtilise = true;
+            Gontrand.setVie(gontrand.getVie() + 1);   // faut mettre une limite a 4 vies sinon ca s eternalise
+            mannaEstUtilise = true;
         }
 
     }
@@ -120,7 +122,6 @@ public class Partie {
     public void draw(GraphicsContext context) {
 
         dessinerFondEcran(context, algues);
-
 
 
         baril.draw(context, camera);
@@ -131,7 +132,7 @@ public class Partie {
         if (tempsDepuisDebutNiveau < 4) {
             context.setFont(Font.font("Purisa", 50));
             context.setFill(Color.BLACK);
-            context.fillText("NIVEAU " + numeroDeNiveau, (MainJavaFX.w)/2 - 100, (MainJavaFX.h)/2);
+            context.fillText("NIVEAU " + numeroDeNiveau, (MainJavaFX.w) / 2 - 100, (MainJavaFX.h) / 2);
         }
 
 
@@ -152,17 +153,30 @@ public class Partie {
 
             context.setFont(Font.font("BOLD", 50));
             context.setFill(Color.DARKRED);
-            context.fillText("FIN DE PARTIE", MainJavaFX.w/2 - 150, (MainJavaFX.h)/2);   // marche pas, doit recommencer apres chaque partie
+            context.fillText("FIN DE PARTIE", MainJavaFX.w / 2 - 150, (MainJavaFX.h) / 2);
         }
 
         if (jeuEstEnPause) {
             context.setFill(Color.BLACK);
             context.setFont(Font.font("BOLD", 50));
-            context.fillText("PAUSE", MainJavaFX.w/2 - 50, (MainJavaFX.h)/2);
+            context.fillText("PAUSE", MainJavaFX.w / 2 - 50, (MainJavaFX.h) / 2);
         }
 
         if (modeDebogage) {
             dessinerDebogage(context);
+        }
+
+        if (Input.isKeyPressed(KeyCode.F) && !fEtaitEnfonce) {
+            for (double x = 0; x < MainJavaFX.w; x += 50) {
+                for (double y = 0; y < MainJavaFX.h; y += 50) {
+                    var positionMonde = new Point2D(x, y);
+                    var positionEcran = positionMonde.add(camera.getPositionCamera());
+                    System.out.println(positionEcran);
+                    // TODO: Seulement faire ça si la position (x, y) est visible dans l'écran
+                    Point2D force = champElectrique(poissonsEnnemi, positionEcran);
+                    UtilitairesDessins.dessinerVecteurForce(positionMonde, force, context);
+                }
+            }
         }
 
         gontrand.drawBarreDeVie(context);
@@ -179,8 +193,7 @@ public class Partie {
             return;   // ca arrete pas le temps, c ca la confusion A VOIR
         }
 
-        switch (numeroProjectileGontrand)
-        {
+        switch (numeroProjectileGontrand) {
             case 0:
                 imageProjectileActuel = new Image("etoile.png");
                 break;
@@ -216,9 +229,6 @@ public class Partie {
         }
 
 
-
-
-
         // À voir si on met ça dans Gontrand ou ici
         arreteSiClamp(gontrand);
         clamp(gontrand);
@@ -238,7 +248,8 @@ public class Partie {
 
         if (gontrand.getDroite() >= camera.getLargeurNiveau()) {
             nouveauNiveau();
-
+            barilEstUtilise = false;
+            mannaEstUtilise = false;
         }
 
         if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
@@ -247,13 +258,13 @@ public class Partie {
 
             if (numeroProjectileGontrand == 0) {
                 projectiles.add(new EtoileDeMer(gontrand.getCentre()));  // a changer 100%%%%%%%%%%
-            } else if (numeroProjectileGontrand == 1 ) {
+            } else if (numeroProjectileGontrand == 1) {
                 int i = 0;
-                while (i < 3){
+                while (i < 3) {
                     i++;
                     projectiles.add(new Hippocampe(gontrand.getCentre()));
                 }
-            }  else if (numeroProjectileGontrand == 2) {
+            } else if (numeroProjectileGontrand == 2) {
                 projectiles.add(new BoiteSardine(gontrand.getCentre()));
             }
         }
@@ -314,8 +325,8 @@ public class Partie {
         boolean estClampX = Math.clamp(objetDuJeu.position.getX(), camera.getPositionCamera().getX(), camera.getLargeurNiveau() - gontrand.getTaille().getX()) != gontrand.position.getX();
         boolean estClampY = Math.clamp(objetDuJeu.position.getY(), camera.getPositionCamera().getY(), camera.getLargeurNiveau() - gontrand.getTaille().getY()) != gontrand.position.getY();
 
-        if (estClampX)  objetDuJeu.velocite = new Point2D(0, objetDuJeu.velocite.getY());
-        if (estClampY)  objetDuJeu.velocite = new Point2D(objetDuJeu.velocite.getX(), 0);
+        if (estClampX) objetDuJeu.velocite = new Point2D(0, objetDuJeu.velocite.getY());
+        if (estClampY) objetDuJeu.velocite = new Point2D(objetDuJeu.velocite.getX(), 0);
     }
 
 
@@ -330,10 +341,7 @@ public class Partie {
         poissonsEnnemi = new ArrayList<>(numeroDeNiveau);
         projectiles = new ArrayList<>();
         manna = new Manna();
-        baril = new  Baril();
-        barilEstUtilise = false;
-        mannaEstUtilise = false;
-
+        baril = new Baril();
 
     }
 
@@ -380,6 +388,7 @@ public class Partie {
         return jeuTermine;
     }
 
+
     private void dessinerFondEcran(GraphicsContext context, ArrayList<Algue> algues) {
 
         context.setFill(couleurFond);
@@ -388,45 +397,47 @@ public class Partie {
         for (Algue a : algues) {
             a.draw(context, camera);
         }
+
+
     }
 
     public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
 
-        Point2D champElectrique = new Point2D(0,0);
+        Point2D champElectrique = new Point2D(0, 0);
 
-        double k = 9.0*Math.pow(10,9);
+        double k = 200;
         double absQPoisson = 900; //car tous les poissons ennemis ont une charge de -900
 
         for (PoissonEnnemi poisson : poissons) {
 
-            Point2D posPoisson = poisson.getPosition();
+            Point2D posPoisson = poisson.getCentre();
 
             double distance = (posPoisson.distance(point));
             distance = Math.max(distance, 1); // Limite la distance à au moins 1 pixel.
 
             Point2D direction = posPoisson.subtract(point).normalize();
 
-            double moduleChampE = (k*absQPoisson)/Math.pow(distance, 2);
-
+            double moduleChampE = (k * absQPoisson) / Math.pow(distance, 2);
             Point2D champUnPoisson = direction.multiply(moduleChampE);
 
             champElectrique = champElectrique.add(champUnPoisson);
         }
-
+        System.out.println(champElectrique);
 
         return champElectrique;
     }
-    
+
     public Point2D forceElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {
         double qSardine = 900; //Car la charge d'une boite de sardine est toujours de 900
 
         Point2D forceE = champElectrique(poissons, point).multiply(qSardine);
-        
+
         return forceE;
     }
 
 
-    public void modeDebogage () {
+
+    public void modeDebogage() {
 
         //Sauter un niveau
 
@@ -443,7 +454,7 @@ public class Partie {
 
         //Donner les sardines comme projectile
 
-        if  (Input.isKeyPressed(KeyCode.E)) {
+        if (Input.isKeyPressed(KeyCode.E)) {
             numeroProjectileGontrand = 2;
         }
 
@@ -464,22 +475,23 @@ public class Partie {
 
         }
         dEtaitEnfonce = Input.isKeyPressed(KeyCode.D);
+
     }
 
     public void dessinerDebogage(GraphicsContext context) {
         context.setFill(Color.WHITE);
         context.setFont(Font.font("Arial", 12));
-        context.fillText("NB Poissons: " + poissonsEnnemi.size(), 10,60);
-        context.fillText("NB Projectiles: " + projectiles.size(), 10,75);
-        context.fillText("Position Gontrand: " + ((gontrand.getPositionX() / (MainJavaFX.w * 8)) * 100) + "%",10, 90) ;
+        context.fillText("NB Poissons: " + poissonsEnnemi.size(), 10, 60);
+        context.fillText("NB Projectiles: " + projectiles.size(), 10, 75);
+        context.fillText("Position Gontrand: " + ((gontrand.getPositionX() / (MainJavaFX.w * 8)) * 100) + "%", 10, 90);
 
     }
 
-    public static double getTempsDepuisDebutNiveau(){
+    public static double getTempsDepuisDebutNiveau() {
         return tempsDepuisDebutNiveau;
     }
 
-    public static double getTempsDepuisMortGontrand(){
+    public static double getTempsDepuisMortGontrand() {
         return tempsDepuisMortGontrand;
     }
 
