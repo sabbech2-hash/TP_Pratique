@@ -38,17 +38,23 @@ public class Gontrand extends ObjetDuJeu {
 
         velocite = new Point2D(velociteMax(velocite.getX()), velociteMax(velocite.getY()));
 
-        if (estStableEnX && velocite.getX() > 0) {
+        if (estStableEnX && velocite.getX() > 1) {
             acceleration = new Point2D(-400, acceleration.getY());
-        } else if  (estStableEnX && velocite.getX() < 0) {
+        } else if  (estStableEnX && velocite.getX() < -1) {
             acceleration = new Point2D(400, acceleration.getY());  // c ca qui fait en sorte que ca tweak
+        } else if(estStableEnX) {
+            acceleration = new Point2D(0, acceleration.getY());
+            velocite = new Point2D(0, velocite.getY());
         }
 
 
-        if (estStableEnY && velocite.getY() > 0) {
+        if (estStableEnY && velocite.getY() > 1) {
             acceleration = new Point2D(acceleration.getX(), -400);
-        }  else if (estStableEnY && velocite.getY() < 0) {
+        }  else if (estStableEnY && velocite.getY() < -1) {
             acceleration = new Point2D(acceleration.getX(), 400);
+        } else if(estStableEnY) {
+            acceleration = new Point2D(acceleration.getX(), 0);
+            velocite = new Point2D(velocite.getX(), 0);
         }
 
         if (tempsInvincible > 0) {
