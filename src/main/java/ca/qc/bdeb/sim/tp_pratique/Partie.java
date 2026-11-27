@@ -46,7 +46,6 @@ public class Partie {
         //this.camera = new Camera();
         //algues = positionAlgues();
         //couleurFond = Color.hsb(random.nextInt(190, 270), 0.84, 1.00);
-        nouveauNiveau();
         jeuTermine = false;
         jeuEstEnPause = false;
         modeDebogage = false;
@@ -54,6 +53,8 @@ public class Partie {
         tEtaitEnfonce = false;
         barilEstUtilise = false;
         mannaEstUtilise = false;
+        gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
+        nouveauNiveau();
 
     }
 
@@ -320,7 +321,7 @@ public class Partie {
 
 
     private void nouveauNiveau() {
-        gontrand = new Gontrand(new Point2D(0, 200), new Point2D(0, 0), new Point2D(0, 0), new Point2D(102, 90));
+        gontrand.position = new Point2D(0, 200);
         camera = new Camera();
         tempsDepuisDebutNiveau = 0;
         tempsDepuisMortGontrand = 0;
