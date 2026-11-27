@@ -150,10 +150,4 @@ public class Gontrand extends ObjetDuJeu {
     public double getPositionX () {
         return position.getX();
     }
-
-    public Image setImage (Image image) {
-        return image;
-    }
-
-
 }

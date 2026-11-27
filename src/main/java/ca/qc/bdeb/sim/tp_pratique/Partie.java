@@ -6,8 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -23,6 +21,7 @@ public class Partie {
     private boolean debugChampElectrique;
     private boolean barilEstUtilise;
     private boolean mannaEstUtilise;
+    private ArrayList<ObjetDuJeu> objetsDuJeu;
     public static Gontrand gontrand;
     private ArrayList<PoissonEnnemi> poissonsEnnemi;
     private ArrayList<Projectile> projectiles;
@@ -192,6 +191,15 @@ public class Partie {
 
     public void update(double deltaTemps) {
 
+        for (ObjetDuJeu o: objetsDuJeu) {
+            if (o instanceof Projectile) {
+                System.out.println("projectiles");
+            } else {
+                System.out.println("autres");
+            }
+
+        }
+
         if (jeuTermine) {
             tempsDepuisMortGontrand += deltaTemps;
         }
@@ -354,6 +362,10 @@ public class Partie {
         projectiles = new ArrayList<>();
         manna = new Manna();
         baril = new Baril();
+        objetsDuJeu = new ArrayList<>();
+        objetsDuJeu.addAll(projectiles);
+        objetsDuJeu.addAll(algues);
+        objetsDuJeu.addAll(poissonsEnnemi);
 
     }
 

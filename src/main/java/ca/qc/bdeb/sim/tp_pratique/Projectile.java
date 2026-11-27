@@ -1,8 +1,5 @@
 package ca.qc.bdeb.sim.tp_pratique;
 
-import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
-
 public abstract class Projectile extends ObjetDuJeu {
 
 
@@ -16,12 +13,4 @@ public abstract class Projectile extends ObjetDuJeu {
         return super.verifierCollision(autre);
     }
 
-    @Override
-    public void draw(GraphicsContext context, Camera camera) {
-
-        Point2D positionEcran = camera.coordoEcran(position);
-
-        context.drawImage(image, positionEcran.getX(), positionEcran.getY(), taille.getX(),  taille.getY());
-
-    }
 }

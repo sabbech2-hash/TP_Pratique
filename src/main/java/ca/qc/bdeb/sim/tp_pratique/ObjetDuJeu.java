@@ -62,10 +62,6 @@ public class ObjetDuJeu {
         return position;
     }
 
-    public Point2D getVelocite() {
-        return velocite;
-    }
-
     public double getHaut() {
         return position.getY();
     }
