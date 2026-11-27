@@ -29,11 +29,7 @@ public class Manna extends ObjetDuJeu {
     public void draw(GraphicsContext context, Camera camera) {
         super.draw(context, camera);
     }
-
-    @Override
-    protected void updatePhysique(double deltaTemps) {
-        super.updatePhysique(deltaTemps);
-    }
+    
 
     @Override
     public boolean verifierCollision(ObjetDuJeu autre) {

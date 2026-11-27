@@ -151,7 +151,7 @@ public class Partie {
 
             context.setFont(Font.font("BOLD", 50));
             context.setFill(Color.DARKRED);
-            context.fillText("FIN DE PARTIE", MainJavaFX.w/2 - 150, (MainJavaFX.h)/2);
+            context.fillText("FIN DE PARTIE", MainJavaFX.w/2 - 150, (MainJavaFX.h)/2);   // marche pas, doit recommencer apres chaque partie
         }
 
         if (jeuEstEnPause) {
@@ -237,8 +237,7 @@ public class Partie {
 
         if (gontrand.getDroite() >= camera.getLargeurNiveau()) {
             nouveauNiveau();
-            barilEstUtilise = false;
-            mannaEstUtilise = false;
+
         }
 
         if (Input.isKeyPressed(KeyCode.SPACE) && tempsDepuisDernierTir >= 0.5) {    // ajuster en fonction de Input, jsp pas trop comment, alors on test pour voir mtn
@@ -290,7 +289,7 @@ public class Partie {
 
         for (int i = projectiles.size() - 1; i >= 0; i--) {
             Projectile projectile = projectiles.get(i);
-            if(projectile.getGauche() - cameraEnX > MainJavaFX.w || projectile.getDroite() - cameraEnX < 0 || projectile.getBas() < 0 || projectile.getHaut() > MainJavaFX.h) {
+            if (projectile.getGauche() - cameraEnX > MainJavaFX.w || projectile.getDroite() - cameraEnX < 0 || projectile.getBas() < 0 || projectile.getHaut() > MainJavaFX.h) {
                 projectiles.remove(projectile);
             }
         }
@@ -331,6 +330,9 @@ public class Partie {
         projectiles = new ArrayList<>();
         manna = new Manna();
         baril = new  Baril();
+        barilEstUtilise = false;
+        mannaEstUtilise = false;
+
 
     }
 
@@ -377,7 +379,6 @@ public class Partie {
         return jeuTermine;
     }
 
-
     private void dessinerFondEcran(GraphicsContext context, ArrayList<Algue> algues) {
 
         context.setFill(couleurFond);
@@ -386,8 +387,6 @@ public class Partie {
         for (Algue a : algues) {
             a.draw(context, camera);
         }
-
-
     }
 
     public Point2D champElectrique(ArrayList<PoissonEnnemi> poissons, Point2D point) {

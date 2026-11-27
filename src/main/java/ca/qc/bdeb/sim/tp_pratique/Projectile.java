@@ -12,12 +12,6 @@ public abstract class Projectile extends ObjetDuJeu {
     }
 
     @Override
-    protected void updatePhysique(double deltaTemps) {
-        super.updatePhysique(deltaTemps);
-
-    }
-
-    @Override
     public boolean verifierCollision(ObjetDuJeu autre) {
         return super.verifierCollision(autre);
     }

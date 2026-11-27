@@ -41,26 +41,4 @@ public class PoissonEnnemi extends ObjetDuJeu {
     public void update(double deltaTemps) {
         super.update(deltaTemps);
     }
-
-    @Override
-    public void updatePhysique(double deltaTemps) {
-        super.updatePhysique(deltaTemps);
-    }
-
-    /*@Override
-    public void draw(GraphicsContext context, Camera camera) {
-        int nombreDePoisson = random.nextInt(1,5);
-
-        Point2D positionEcran = camera.coordoEcran(position);
-
-        context.drawImage(
-                image,
-                positionEcran.getX(),
-                positionEcran.getY(),
-                taille.getX(),
-                taille.getY()
-        );
-        context.drawImage(image, position.getX(), position.getY(), taille.getX(), taille.getY());
-
-    }*/
 }

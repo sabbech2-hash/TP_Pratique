@@ -26,48 +26,21 @@ public class MainJavaFX extends Application {
 
     private Stage stage;
     Random random = new Random();
-    //private static Color couleurFond;
+
+    public void gererTouche (Partie partie) {
 
 
-   /* public ArrayList<Algues> positionAlgues () {
+        boolean estEscapeAppuye = Input.isKeyPressed(KeyCode.ESCAPE);
+        boolean estPAppuye = Input.isKeyPressed(KeyCode.P);
 
-
-        Image [] imagesDecor = {
-                new Image("decor1.png"),
-                new Image("decor2.png"),
-                new Image("decor3.png"),
-                new Image("decor4.png"),
-                new Image("decor5.png"),
-                new Image("decor6.png"),
-
-        };
-
-
-        int position = 0;
-
-        ArrayList <Algues> algues = new ArrayList();
-
-        while (position < w * 8) {
-            algues.add(new  Algues(position, imagesDecor[random.nextInt(imagesDecor.length)]));
-            position += 80 + random.nextInt(50,101);
-        }
-        return algues;
-
-    }
-*/
-
-    /*public void dessinerFondEcran (GraphicsContext context, ArrayList<Algues> algues) {
-
-        context.setFill(couleurFond);
-        context.fillRect(0, 0, w, h);
-
-        for (Algues a : algues) {
-            //context.drawImage(a.getImage(), a.getPosition().getX(), a.getPosition().getY(), 80, 119);
+        if (estEscapeAppuye) {    //mettre en fonction du INPUT
+            Platform.exit();
         }
 
-
+        if (estPAppuye) {  // mettre en fonction du INPUT
+            partie.changerEtatPause();
+        }
     }
-*/
 
     private Scene sceneAccueil() {
 
@@ -139,7 +112,7 @@ public class MainJavaFX extends Application {
         Text titre = new Text("Gontrand le Flétand");
         titre.setFont(Font.font("Purisa", 50));
 
-        Random random = new Random();
+       // Random random = new Random();
         Image[] imagesPoissons = {
 
                 new Image("poisson1.png"),
@@ -202,19 +175,17 @@ public class MainJavaFX extends Application {
         });
 
         scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ESCAPE) {
+            if (e.getCode() == KeyCode.ESCAPE) {  // faudrait changer pour que ca soit en fonction de INPUT
                 stage.setScene(sceneAccueil());
             }
         });
 
         root.getChildren().addAll(canvas, nodesScenesInfos);
 
-
         return scene;
     }
 
     private Scene sceneJeu() {
-
 
         Partie partie = new Partie();
 
@@ -227,21 +198,17 @@ public class MainJavaFX extends Application {
 
         root.getChildren().add(canvas);
 
+
+
         scene.setOnKeyPressed(e -> {
-            if (e.getCode() == KeyCode.ESCAPE) {
-                Platform.exit();
-            } else if (e.getCode() == KeyCode.P) {
-                partie.changerEtatPause();
-            } else {
                 Input.setKeyPressed(e.getCode(), true);
+                gererTouche(partie);
             }
-        });
+        );
 
         scene.setOnKeyReleased(e -> {
             Input.setKeyPressed(e.getCode(), false);
         });
-
-
 
 
         AnimationTimer timer = new AnimationTimer() {
@@ -253,11 +220,11 @@ public class MainJavaFX extends Application {
 
                 context.fillRect(0, 0, w, h);
 
-                if (!partie.partieEstEnPause()) {   // meme chose ici
+                if (!partie.partieEstEnPause()) {   //
 
                     partie.update(deltaTemps);
 
-                    if (partie.verifierEtatDePartie()) {    // vu que c de la logique, je pense pas que ca devrait etre la
+                    if (partie.verifierEtatDePartie()) {
 
                         if (Partie.getTempsDepuisMortGontrand() > 3) {
                             stop();
@@ -274,10 +241,8 @@ public class MainJavaFX extends Application {
 
             }
         };
+
         timer.start();
-
-
-
 
         return scene;
     }

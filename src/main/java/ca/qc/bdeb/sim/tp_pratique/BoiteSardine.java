@@ -4,7 +4,7 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
-public class BoiteSardine extends Projectile{
+public class BoiteSardine extends Projectile {
 
     public BoiteSardine(Point2D centreGonrtand) {
         position = new Point2D(centreGonrtand.getX(), centreGonrtand.getY());   // PAS TOTALEMENT centrer
@@ -18,6 +18,7 @@ public class BoiteSardine extends Projectile{
 
     @Override
     protected void updatePhysique(double deltaTemps) {
+
         velocite = velocite.add(acceleration.multiply(deltaTemps));
         if (velocite.magnitude() > 400)
             velocite = velocite.normalize().multiply((400));

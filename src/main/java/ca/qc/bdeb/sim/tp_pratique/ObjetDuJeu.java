@@ -5,6 +5,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class ObjetDuJeu {
+
     protected Point2D position;
     protected Point2D velocite;
     protected Point2D acceleration;
@@ -13,22 +14,22 @@ public class ObjetDuJeu {
 
     public void update(double deltaTemps) {
 
-        updatePhysique(deltaTemps);   // va faire le update dependamment de l'objet
+        updatePhysique(deltaTemps);   // updatera dépendamment de l'objet
 
     }
 
     protected void updatePhysique (double deltaTemps) {
 
         velocite = velocite.add(acceleration.multiply(deltaTemps));
-        position = position.add(velocite.multiply(deltaTemps));       // un update qui s'applique a tous (lois physiques)
+        position = position.add(velocite.multiply(deltaTemps));
 
     }
 
     public void draw(GraphicsContext context, Camera camera){
         Point2D positionEcran = camera.coordoEcran(position);
 
-
         // image d'objet du jeu
+
         context.drawImage(
                 image,
                 positionEcran.getX(),
@@ -40,11 +41,12 @@ public class ObjetDuJeu {
 
     public boolean verifierCollision(ObjetDuJeu autre) {
         boolean estEnCollison;
-       if (getBas() < autre.getHaut() || getHaut() > autre.getBas() || getDroite() < autre.getGauche() || getGauche() > autre.getDroite()) {
+        if (getBas() < autre.getHaut() || getHaut() > autre.getBas() || getDroite() < autre.getGauche() || getGauche() > autre.getDroite()) {
            estEnCollison = false;
-       } else {
+        } else {
            estEnCollison = true;
-       }
+        }
+
        return estEnCollison;
     }
 

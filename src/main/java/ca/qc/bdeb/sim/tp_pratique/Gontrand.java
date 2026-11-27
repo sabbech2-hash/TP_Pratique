@@ -26,7 +26,6 @@ public class Gontrand extends ObjetDuJeu {
     @Override
     public void update(double deltaTemps) {
 
-
         boolean estGauche = Input.isKeyPressed(KeyCode.LEFT);
         boolean estDroite = Input.isKeyPressed(KeyCode.RIGHT);
         boolean estHaut = Input.isKeyPressed(KeyCode.UP);
@@ -39,43 +38,10 @@ public class Gontrand extends ObjetDuJeu {
 
         velocite = new Point2D(velociteMax(velocite.getX()), velociteMax(velocite.getY()));
 
-        //if (gauche) {
-          //  acceleration = new Point2D(-1000, acceleration.getY());
-        //}
-
-        //if (velocite.getX() < -300) {
-         //   velocite = new Point2D(-300, velocite.getY());
-       // }
-
-
-        //if (droite) {
-          //  acceleration = new Point2D(1000, acceleration.getY());
-       // }
-       // if (velocite.getX() > 300) {
-         //   velocite = new Point2D(300, velocite.getY());
-       // }
-
-
-       // if (bas) {
-          //  acceleration = new Point2D(acceleration.getX(), 1000);
-        //}
-       // if (velocite.getY() > 300) {
-         //   velocite = new Point2D(velocite.getX(), 300);
-        //}
-
-
-        //if (haut) {
-           // acceleration = new Point2D(acceleration.getX(), -1000);
-       // }
-        //if (velocite.getY() < -300) {
-          //  velocite = new Point2D(velocite.getX(), -300);
-        //}
-
-
         if (estStableEnX && velocite.getX() > 0) {
             acceleration = new Point2D(-400, acceleration.getY());
         } else if  (estStableEnX && velocite.getX() < 0) {
-            acceleration = new Point2D(400, acceleration.getY());
+            acceleration = new Point2D(400, acceleration.getY());  // c ca qui fait en sorte que ca tweak
         }
 
 
@@ -95,8 +61,7 @@ public class Gontrand extends ObjetDuJeu {
             }
         }
 
-
-        updatePhysique(deltaTemps);
+        super.updatePhysique(deltaTemps);
 
     }
 
@@ -120,12 +85,6 @@ public class Gontrand extends ObjetDuJeu {
     }
 
     @Override
-    protected void updatePhysique(double deltaTemps) {
-        super.updatePhysique(deltaTemps);
-
-    }
-
-    @Override
     public void draw(GraphicsContext context, Camera camera) {
 
         Point2D positionEcran = camera.coordoEcran(position);
@@ -133,12 +92,7 @@ public class Gontrand extends ObjetDuJeu {
      if (tempsInvincible > 0) {
 
         if ((tempsDepuisCollision % 0.5) < 0.25) {
-            context.drawImage(
-                    image,
-                    positionEcran.getX(),
-                    positionEcran.getY(),
-                    taille.getX(),
-                    taille.getY());
+           super.draw(context, camera);
         }
 
         } else {
