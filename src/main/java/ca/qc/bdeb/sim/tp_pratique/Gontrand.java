@@ -53,13 +53,21 @@ public class Gontrand extends ObjetDuJeu {
 
         if (tempsInvincible > 0) {
             tempsInvincible -= deltaTemps;
+
+            if ((tempsDepuisCollision % 0.5) < 0.25) {
+                image = new Image("gontrand-outch.png");
+            } else {
+                image = null;
+            }
+
             tempsDepuisCollision += deltaTemps;
 
+        }
 
-            if (tempsInvincible < 0) {
+        else {
                image = new Image("gontrand.png");
             }
-        }
+
 
         super.updatePhysique(deltaTemps);
 
@@ -84,38 +92,6 @@ public class Gontrand extends ObjetDuJeu {
         }
     }
 
-    @Override
-    public void draw(GraphicsContext context, Camera camera) {
-
-        Point2D positionEcran = camera.coordoEcran(position);
-
-     if (tempsInvincible > 0) {
-
-        if ((tempsDepuisCollision % 0.5) < 0.25) {
-           super.draw(context, camera);
-        }
-
-        } else {
-
-            //  image de Gontrand
-            context.drawImage(
-                    new Image("gontrand.png"),
-                    positionEcran.getX(),
-                    positionEcran.getY(),
-                    taille.getX(),
-                    taille.getY());
-        }
-
-        /*
-        drawBarreDeVie(context);
-
-
-        context.setFill(Color.WHITE);
-        double largeurEnFctVie = vie * 37.5;
-        context.fillRect(10, 10, largeurEnFctVie, 35);
-        context.drawImage(Partie.getImageProjectileActuel(),  170, 10);  // a changer en fonction du projectile actuel
-*/
-    }
 
     public static void drawBarreDeVie(GraphicsContext context) {
         context.setStroke(Color.WHITE);
@@ -168,4 +144,10 @@ public class Gontrand extends ObjetDuJeu {
     public double getPositionX () {
         return position.getX();
     }
+
+    public Image setImage (Image image) {
+        return image;
+    }
+
+
 }
